@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plain Chat Math"
+  short_description: "Use plain-text math in chat responses for terminal readability."
+  default_prompt: "When replying in chat, write formulas in plain text or code blocks instead of Markdown math. Markdown/LaTeX math is allowed when editing files."

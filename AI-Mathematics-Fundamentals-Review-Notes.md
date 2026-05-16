@@ -4,7 +4,7 @@
 
 - 新版指南同时适用于闭卷与开卷：闭卷更重基础概念与基本计算，开卷更重信息检索、跨知识点整合与应用。
 - 线性代数部分重点是向量与矩阵的基本性质与计算。
-- 概率部分重点是概率与随机变量的基本性质与计算；本笔记保留的 `MLE / MAP` 主要用于旧版衔接与开卷拓展，闭卷优先级低于前两章。
+- 概率部分重点是概率与随机变量的基本性质与计算，对应第 3-4 章；本笔记保留的 `MLE / MAP` 主要用于旧版衔接与开卷拓展，不占用新版考纲章节编号。
 - 最优化部分重点是凸集 / 凸函数判定、机器学习常见损失及其导数、常见优化算法尤其前反向传播的迭代格式；新版明确不考收敛性证明。
 - 大模型数学基础是新版新增重点：循环神经网络、自注意力、Transformer、Decoder-only 大模型的参数量 / 计算量 / 内存量计算，以及 LoRA。
 
@@ -329,9 +329,6 @@ $$e_2 = \frac{u_2}{\|u_2\|} = \frac{1}{\sqrt{0.5^2+(-0.5)^2+1^2}}[0.5, -0.5, 1]^
 
 ---
 
-
----
-
 ## 第 2 章 矩阵基础
 
 ### 2.1 矩阵的基本运算 (#)
@@ -638,7 +635,6 @@ $$\left(\begin{array}{ccc|ccc} 1 & 0 & 0 & -24 & 18 & 5 \\ 0 & 1 & 0 & 20 & -15 
 
 ---
 
-
 **可逆矩阵的充要条件**（以下条件等价）：
 - $\det(A) \neq 0$
 - $\text{rank}(A) = n$（满秩）
@@ -853,7 +849,7 @@ y
 
 ---
 
-## 什么是对角化？
+#### 什么是对角化？
 
 **对角矩阵**：只有主对角线上有非零元素的矩阵
 $$D = \begin{pmatrix} \lambda_1 & 0 & \cdots \\ 0 & \lambda_2 & \cdots \\ \vdots & \vdots & \ddots \end{pmatrix}$$
@@ -866,7 +862,7 @@ $$P^{-1}AP = D$$
 
 ---
 
-## 为什么能这样分解？
+#### 为什么能这样分解？
 
 **关键观察**：
 
@@ -899,7 +895,7 @@ $$A = PDP^{-1}$$
 
 ---
 
-## 什么时候可以对角化？
+#### 什么时候可以对角化？
 
 **可对角化条件**：$n$ 阶矩阵 $A$ 有 $n$ 个**线性无关**的特征向量。
 
@@ -909,7 +905,7 @@ $$A = PDP^{-1}$$
 
 ---
 
-## 对角化后有什么用？
+#### 对角化后有什么用？
 
 **最大好处**：计算 $A^k$ 变得超级简单！
 
@@ -927,15 +923,15 @@ $$D^k = \begin{pmatrix} \lambda_1^k & 0 & \cdots \\ 0 & \lambda_2^k & \cdots \\ 
 
 ---
 
-## 详细例题：对角化 $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$
+#### 详细例题：对角化 $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$
 
-### Step 1：求特征值和特征向量
+#### Step 1：求特征值和特征向量
 
 由上节可知：
 - 特征值：$\lambda_1 = 3$，$\lambda_2 = 1$
 - 对应特征向量：$v_1 = [1, 1]^T$，$v_2 = [1, -1]^T$
 
-### Step 2：构造矩阵 $P$ 和 $D$
+#### Step 2：构造矩阵 $P$ 和 $D$
 
 $P$ 的列是特征向量：
 $$P = [v_1 \ v_2] = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
@@ -945,7 +941,7 @@ $$D = \begin{pmatrix} 3 & 0 \\ 0 & 1 \end{pmatrix}$$
 
 **注意顺序**：$P$ 的第 1 列对应 $D$ 的第 1 个对角元，第 2 列对应第 2 个对角元。
 
-### Step 3：求 $P^{-1}$
+#### Step 3：求 $P^{-1}$
 
 对于 $2 \times 2$ 矩阵 $P = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$：
 
@@ -954,7 +950,7 @@ $$D = \begin{pmatrix} 3 & 0 \\ 0 & 1 \end{pmatrix}$$
 用公式法：
 $$P^{-1} = \frac{1}{-2}\begin{pmatrix} -1 & -1 \\ -1 & 1 \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
 
-### Step 4：验证 $A = PDP^{-1}$
+#### Step 4：验证 $A = PDP^{-1}$
 
 计算 $PDP^{-1}$：
 
@@ -968,7 +964,7 @@ $$PDP^{-1} = \begin{pmatrix} 3 & 1 \\ 3 & -1 \end{pmatrix} \cdot \frac{1}{2}\beg
 
 ---
 
-## 计算 $A^{10}$ 的例子
+#### 计算 $A^{10}$ 的例子
 
 **直接算**：需要 9 次矩阵乘法，非常麻烦！
 
@@ -985,7 +981,7 @@ $$= \frac{1}{2}\begin{pmatrix} 59049 & 1 \\ 59049 & -1 \end{pmatrix}\begin{pmatr
 
 ---
 
-## 对称矩阵的正交对角化
+#### 对称矩阵的正交对角化
 
 如果 $A$ 是**实对称矩阵**（$A = A^T$），则有更强的性质：
 
@@ -1001,7 +997,7 @@ $$A = Q\Lambda Q^T$$
 
 ---
 
-## 对称矩阵的例子：正交对角化
+#### 对称矩阵的例子：正交对角化
 
 仍用 $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$。
 
@@ -1037,7 +1033,7 @@ $$Q\Lambda Q^T = \frac{1}{\sqrt{2}}\begin{pmatrix} 3 & 1 \\ 3 & -1 \end{pmatrix}
 
 ---
 
-## 总结
+#### 总结
 
 | 概念 | 公式/条件 |
 |------|----------|
@@ -1056,7 +1052,7 @@ $$Q\Lambda Q^T = \frac{1}{\sqrt{2}}\begin{pmatrix} 3 & 1 \\ 3 & -1 \end{pmatrix}
 
 ---
 
-## 什么是二次型？
+#### 什么是二次型？
 
 对于对称矩阵 $A$ 和向量 $x$，表达式 $x^T A x$ 称为**二次型**。
 
@@ -1073,7 +1069,7 @@ $$= x_1(ax_1 + bx_2) + x_2(bx_1 + cx_2) = ax_1^2 + 2bx_1x_2 + cx_2^2$$
 
 ---
 
-## 正定矩阵的定义
+#### 正定矩阵的定义
 
 **定义**：对称矩阵 $A$ 是**正定矩阵**，如果对任意非零向量 $x \neq 0$，都有：
 $$x^T A x > 0$$
@@ -1088,9 +1084,9 @@ $$x^T A x < 0$$
 
 ---
 
-## 几何意义（二维情况）
+#### 几何意义（二维情况）
 
-### 正定矩阵的例子
+#### 正定矩阵的例子
 
 考虑 $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$，对应的二次型：
 $$x^T A x = 2x_1^2 + 2x_1x_2 + 2x_2^2$$
@@ -1120,7 +1116,7 @@ $$= x_1^2 + x_2^2 + (x_1 + x_2)^2$$
 所有方向都是上升的 → 正定
 ```
 
-### 不定矩阵的例子
+#### 不定矩阵的例子
 
 考虑 $A = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$，对应的二次型：
 $$x^T A x = x_1^2 - x_2^2$$
@@ -1144,11 +1140,11 @@ $$x^T A x = x_1^2 - x_2^2$$
 
 ---
 
-## 判定条件（对称矩阵）
+#### 判定条件（对称矩阵）
 
 对于 $n \times n$ 对称矩阵 $A$，以下条件**等价**：
 
-### 方法 1：特征值判定
+#### 方法 1：特征值判定
 
 | 类型 | 特征值条件 |
 |------|----------|
@@ -1164,7 +1160,7 @@ $$x^T A x = x^T Q \Lambda Q^T x = y^T \Lambda y = \sum_{i=1}^{n} \lambda_i y_i^2
 
 ---
 
-### 方法 2：顺序主子式（Sylvester 准则）
+#### 方法 2：顺序主子式（Sylvester 准则）
 
 **顺序主子式**：删除最后 $k$ 行和最后 $k$ 列后剩下的 $k \times k$ 子矩阵的行列式。
 
@@ -1184,9 +1180,9 @@ $$x^T A x = x^T Q \Lambda Q^T x = y^T \Lambda y = \sum_{i=1}^{n} \lambda_i y_i^2
 
 ---
 
-## 详细例题：判断 $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$ 是否正定
+#### 详细例题：判断 $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$ 是否正定
 
-### 方法 1：特征值法
+#### 方法 1：特征值法
 
 由上节可知，$A$ 的特征值为 $\lambda_1 = 3$，$\lambda_2 = 1$。
 
@@ -1194,7 +1190,7 @@ $$x^T A x = x^T Q \Lambda Q^T x = y^T \Lambda y = \sum_{i=1}^{n} \lambda_i y_i^2
 
 ---
 
-### 方法 2：顺序主子式法
+#### 方法 2：顺序主子式法
 
 - 一阶主子式：$a_{11} = 2 > 0$ ✓
 - 二阶主子式：$\det(A) = 2\times2 - 1\times1 = 3 > 0$ ✓
@@ -1203,7 +1199,7 @@ $$x^T A x = x^T Q \Lambda Q^T x = y^T \Lambda y = \sum_{i=1}^{n} \lambda_i y_i^2
 
 ---
 
-### 方法 3：直接验证定义
+#### 方法 3：直接验证定义
 
 对任意 $x = [x_1, x_2]^T \neq 0$：
 $$x^T A x = 2x_1^2 + 2x_1x_2 + 2x_2^2$$
@@ -1221,9 +1217,9 @@ $$= x_1^2 + x_2^2 + (x_1 + x_2)^2$$
 
 ---
 
-## 另一个例题：$B = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$
+#### 另一个例题：$B = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$
 
-### 方法 1：特征值法
+#### 方法 1：特征值法
 
 特征方程：$\det(B - \lambda I) = (1-\lambda)(4-\lambda) - 4 = \lambda^2 - 5\lambda = 0$
 
@@ -1233,7 +1229,7 @@ $$= x_1^2 + x_2^2 + (x_1 + x_2)^2$$
 
 ---
 
-### 方法 2：顺序主子式法
+#### 方法 2：顺序主子式法
 
 - 一阶主子式：$1 > 0$ ✓
 - 二阶主子式：$\det(B) = 0$ ✗（不正定要求严格大于 0）
@@ -1242,7 +1238,7 @@ $$= x_1^2 + x_2^2 + (x_1 + x_2)^2$$
 
 ---
 
-### 方法 3：直接验证
+#### 方法 3：直接验证
 
 $$x^T B x = x_1^2 + 4x_1x_2 + 4x_2^2 = (x_1 + 2x_2)^2 \geq 0$$
 
@@ -1252,11 +1248,11 @@ $$x^T B x = x_1^2 + 4x_1x_2 + 4x_2^2 = (x_1 + 2x_2)^2 \geq 0$$
 
 ---
 
-## 三维矩阵的例子
+#### 三维矩阵的例子
 
 $C = \begin{pmatrix} 2 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 2 \end{pmatrix}$
 
-### 方法 1：顺序主子式法
+#### 方法 1：顺序主子式法
 
 - 一阶：$2 > 0$ ✓
 - 二阶：$\det\begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix} = 4 - 1 = 3 > 0$ ✓
@@ -1270,7 +1266,7 @@ $$= 2(3) - 1(2) = 6 - 2 = 4 > 0$$
 
 ---
 
-## 不定的例子
+#### 不定的例子
 
 $D = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$
 
@@ -1287,7 +1283,7 @@ $D = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$
 
 ---
 
-## 半正定的判定
+#### 半正定的判定
 
 **注意**：半正定用顺序主子式判定时，需要验证**所有主子式**（不仅仅是顺序的），而不仅限于顺序主子式。
 
@@ -1298,7 +1294,7 @@ $D = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$
 
 ---
 
-## 总结表
+#### 总结表
 
 | 类型 | 特征值 | 顺序主子式（正定/负定） | 定义 |
 |------|--------|----------------------|------|
@@ -1309,22 +1305,22 @@ $D = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$
 
 ---
 
-## 应用
+#### 应用
 
-### 1. 优化理论中的海森矩阵
+#### 1. 优化理论中的海森矩阵
 
 如果函数 $f(x)$ 在点 $x^*$ 处的海森矩阵 $H_f(x^*)$ 是**正定**的，则 $x^*$ 是**局部极小值点**。
 
 **例子**：$f(x,y) = x^2 + y^2$ 的海森矩阵是 $\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$，正定，故 $(0,0)$ 是最小值点。
 
-### 2. 协方差矩阵一定是半正定的
+#### 2. 协方差矩阵一定是半正定的
 
 统计中，随机向量的协方差矩阵总是半正定的。这是因为：
 $$\text{Var}(a^T X) = a^T \Sigma a \geq 0$$
 
 方差永远非负！
 
-### 3. 机器学习中的正则化
+#### 3. 机器学习中的正则化
 
 添加 $L_2$ 正则化相当于在损失函数的海森矩阵上加一个正定矩阵（$\lambda I$），使优化问题更稳定。
 
@@ -1336,7 +1332,7 @@ $$\text{Var}(a^T X) = a^T \Sigma a \geq 0$$
 
 ---
 
-## 什么是 SVD？
+#### 什么是 SVD？
 
 **定理**：任意 $m \times n$ 矩阵 $A$ 都可以分解为：
 $$A = U\Sigma V^T$$
@@ -1349,7 +1345,7 @@ $$A = U\Sigma V^T$$
 
 ---
 
-## SVD 与特征值分解的区别
+#### SVD 与特征值分解的区别
 
 **特征值分解**：$A = PDP^{-1}$
 - 只适用于**方阵**（$n \times n$）
@@ -1362,7 +1358,7 @@ $$A = U\Sigma V^T$$
 
 ---
 
-## 几何意义（二维示例）
+#### 几何意义（二维示例）
 
 矩阵 $A$ 对向量 $x$ 的变换 $Ax$ 可以分解为三步：
 1. $V^T$：在原坐标系下旋转/反射（不改变长度）
@@ -1376,7 +1372,7 @@ x → 旋转 → 缩放 → 旋转 → Ax
 
 ---
 
-## 与特征值的关系
+#### 与特征值的关系
 
 SVD 可以通过两个对称半正定矩阵的特征值分解得到：
 
@@ -1389,7 +1385,7 @@ $$\sigma_i = \sqrt{\lambda_i(A^TA)} = \sqrt{\lambda_i(AA^T)}$$
 
 ---
 
-## 为什么这样是对的？
+#### 为什么这样是对的？
 
 从正交性推导：
 $$A = U\Sigma V^T$$
@@ -1404,42 +1400,42 @@ $$A^T A v_i = \sigma_i A^T u_i = \sigma_i \cdot \sigma_i v_i = \sigma_i^2 v_i$$
 
 ---
 
-## 算法步骤（如何手动计算 SVD）
+#### 算法步骤（如何手动计算 SVD）
 
 **目标**：对任意 $m \times n$ 矩阵 $A$，求 $U, \Sigma, V$。
 
-### Step 1：计算 $A^TA$ 和 $AA^T$
+#### Step 1：计算 $A^TA$ 和 $AA^T$
 - $A^TA$ 是 $n \times n$ 对称半正定矩阵
 - $AA^T$ 是 $m \times m$ 对称半正定矩阵
 
-### Step 2：求 $A^TA$ 的特征值和特征向量
+#### Step 2：求 $A^TA$ 的特征值和特征向量
 - 特征值：$\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n \geq 0$
 - 对应单位正交特征向量：$v_1, v_2, \dots, v_n$ → 组成右奇异矩阵 $V = [v_1 \ v_2 \ \dots \ v_n]$
 
-### Step 3：计算奇异值
+#### Step 3：计算奇异值
 $$\sigma_i = \sqrt{\lambda_i}, \quad i = 1, \dots, \min(m,n)$$
 奇异值按降序排列，组成对角矩阵 $\Sigma$ 的对角线，其余元素为 0。
 
-### Step 4：求左奇异向量 $U$
+#### Step 4：求左奇异向量 $U$
 对每个非零奇异值 $\sigma_i > 0$：
 $$u_i = \frac{1}{\sigma_i} A v_i$$
 剩下的 $u_i$ 补全为正交基。
 
 ---
 
-## 详细例题 1：2×2 非对角矩阵
+#### 详细例题 1：2×2 非对角矩阵
 
 求 $A = \begin{pmatrix} 1 & 1 \\ 0 & 0 \end{pmatrix}$ 的 SVD。
 
 ---
 
-### Step 1：计算 $A^TA$
+#### Step 1：计算 $A^TA$
 $$A^T = \begin{pmatrix} 1 & 0 \\ 1 & 0 \end{pmatrix}$$
 $$A^TA = \begin{pmatrix} 1 & 0 \\ 1 & 0 \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}$$
 
 ---
 
-### Step 2：求 $A^TA$ 的特征值和特征向量
+#### Step 2：求 $A^TA$ 的特征值和特征向量
 
 **特征方程**：
 $$\det(A^TA - \lambda I) = \det\begin{pmatrix} 1-\lambda & 1 \\ 1 & 1-\lambda \end{pmatrix} = (1-\lambda)^2 - 1 = \lambda^2 - 2\lambda = 0$$
@@ -1462,7 +1458,7 @@ $$V = [v_1 \ v_2] = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatr
 
 ---
 
-### Step 3：计算奇异值
+#### Step 3：计算奇异值
 $$\sigma_1 = \sqrt{\lambda_1} = \sqrt{2}, \quad \sigma_2 = \sqrt{\lambda_2} = 0$$
 
 奇异值矩阵：
@@ -1470,7 +1466,7 @@ $$\Sigma = \begin{pmatrix} \sqrt{2} & 0 \\ 0 & 0 \end{pmatrix}$$
 
 ---
 
-### Step 4：求左奇异向量 $U$
+#### Step 4：求左奇异向量 $U$
 
 **对 $\sigma_1 = \sqrt{2}$**：
 $$u_1 = \frac{1}{\sigma_1} A v_1 = \frac{1}{\sqrt{2}} \cdot \begin{pmatrix} 1 & 1 \\ 0 & 0 \end{pmatrix} \cdot \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 2 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$$
@@ -1482,7 +1478,7 @@ $$U = [u_1 \ u_2] = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
 
 ---
 
-### Step 5：最终 SVD
+#### Step 5：最终 SVD
 $$A = U\Sigma V^T = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}\begin{pmatrix} \sqrt{2} & 0 \\ 0 & 0 \end{pmatrix} \cdot \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
 
 **验证**：
@@ -1493,45 +1489,45 @@ $$U\Sigma V^T = \begin{pmatrix} \sqrt{2} & 0 \\ 0 & 0 \end{pmatrix} \cdot \frac{
 
 ---
 
-## 详细例题 2：非方阵（2×3 矩阵）
+#### 详细例题 2：非方阵（2×3 矩阵）
 
 求 $A = \begin{pmatrix} 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix}$ 的 SVD。
 
 ---
 
-### Step 1：计算 $A^TA$
+#### Step 1：计算 $A^TA$
 $$A^TA = \begin{pmatrix} 1 & 0 \\ 0 & 1 \\ 1 & 1 \end{pmatrix}\begin{pmatrix} 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 & 1 \\ 0 & 1 & 1 \\ 1 & 1 & 2 \end{pmatrix}$$
 
-### Step 2：求特征值
+#### Step 2：求特征值
 特征方程：$\det(A^TA - \lambda I) = 0$，解得：
 $$\lambda_1 = 3, \quad \lambda_2 = 1, \quad \lambda_3 = 0$$
 
-### Step 3：奇异值
+#### Step 3：奇异值
 $$\sigma_1 = \sqrt{3}, \quad \sigma_2 = \sqrt{1} = 1$$
 
-### Step 4：右奇异向量
+#### Step 4：右奇异向量
 单位特征向量：
 $$v_1 = \frac{1}{\sqrt{6}}\begin{pmatrix} 1 \\ 1 \\ 2 \end{pmatrix}, \quad v_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \\ 0 \end{pmatrix}, \quad v_3 = \frac{1}{\sqrt{3}}\begin{pmatrix} 1 \\ 1 \\ -1 \end{pmatrix}$$
 
-### Step 5：左奇异向量
+#### Step 5：左奇异向量
 $$u_1 = \frac{1}{\sqrt{3}} A v_1 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$$
 $$u_2 = \frac{1}{1} A v_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix}$$
 
-### 最终 SVD
+#### 最终 SVD
 $$A = \underbrace{\begin{pmatrix} \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \end{pmatrix}}_{U} \underbrace{\begin{pmatrix} \sqrt{3} & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix}}_{\Sigma} \underbrace{\begin{pmatrix} \frac{1}{\sqrt{6}} & \frac{1}{\sqrt{6}} & \frac{2}{\sqrt{6}} \\ \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & 0 \\ \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{3}} \end{pmatrix}}_{V^T}$$
 
 ---
 
-## SVD 的核心性质
+#### SVD 的核心性质
 
-### 1. 秩
+#### 1. 秩
 矩阵 $A$ 的秩 = 非零奇异值的个数。
 
-### 2. 范数
+#### 2. 范数
 - 算子 2 范数：$\|A\|_2 = \sigma_1$（最大奇异值）
 - Frobenius 范数：$\|A\|_F = \sqrt{\sum_{i=1}^{r} \sigma_i^2}$
 
-### 3. 低秩近似（截断 SVD）
+#### 3. 低秩近似（截断 SVD）
 取前 $k$ 个最大的奇异值，可以近似原矩阵：
 $$A \approx U_k \Sigma_k V_k^T$$
 
@@ -1541,7 +1537,7 @@ $$A \approx U_k \Sigma_k V_k^T$$
 
 ---
 
-## 应用场景
+#### 应用场景
 
 1. **主成分分析（PCA）**：右奇异向量就是主成分方向
 2. **推荐系统**：SVD 矩阵分解预测用户评分
@@ -1586,7 +1582,7 @@ $$A \approx U_k \Sigma_k V_k^T$$
 
 ---
 
-### 概率公理（Kolmogorov）
+#### 概率公理（Kolmogorov）
 
 概率 $P$ 是定义在事件上的函数，满足三条公理：
 
@@ -1600,7 +1596,7 @@ $$A \approx U_k \Sigma_k V_k^T$$
 
 ---
 
-### 重要性质
+#### 重要性质
 
 **性质 1：对立事件的概率**
 $$P(A^c) = 1 - P(A)$$
@@ -1642,7 +1638,7 @@ $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
 ### 3.2 条件概率、全概率公式、贝叶斯定理 (#)
 
-## 条件概率
+#### 条件概率
 
 **问题**：已知事件 $B$ 已经发生，求事件 $A$ 发生的概率，记作 $P(A|B)$。
 
@@ -1675,7 +1671,7 @@ $$P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{1/6}{3/6} = \frac{1}{3}$$
 
 ---
 
-## 乘法公式
+#### 乘法公式
 
 从条件概率定义变形得到：
 $$P(A \cap B) = P(A|B)P(B) = P(B|A)P(A)$$
@@ -1685,7 +1681,7 @@ $$P(A \cap B \cap C) = P(A)P(B|A)P(C|A \cap B)$$
 
 ---
 
-## 划分
+#### 划分
 
 **定义**：$B_1, B_2, \dots, B_n$ 称为样本空间 $\Omega$ 的一个**划分**，如果：
 1. $B_1, B_2, \dots, B_n$ 两两互斥：$B_i \cap B_j = \emptyset \ (i \neq j)$
@@ -1703,7 +1699,7 @@ $$P(A \cap B \cap C) = P(A)P(B|A)P(C|A \cap B)$$
 
 ---
 
-## 全概率公式
+#### 全概率公式
 
 如果 $B_1, \dots, B_n$ 是样本空间的一个划分，则对任意事件 $A$：
 $$P(A) = \sum_{i=1}^{n} P(A|B_i)P(B_i)$$
@@ -1733,7 +1729,7 @@ $$P(A) = P(A|B_1)P(B_1) + P(A|B_2)P(B_2) = 0.99 \times 0.01 + 0.05 \times 0.99 =
 
 ---
 
-## 贝叶斯定理（Bayes' Theorem）
+#### 贝叶斯定理（Bayes' Theorem）
 
 已知先验概率 $P(B_i)$，观测到 $A$ 发生了，求后验概率 $P(B_i|A)$。
 
@@ -1753,7 +1749,7 @@ $$P(B_1|A) = \frac{P(A|B_1)P(B_1)}{P(A)} = \frac{0.99 \times 0.01}{0.0594} = \fr
 
 ---
 
-## 贝叶斯定理在机器学习中的应用：
+#### 贝叶斯定理在机器学习中的应用：
 - **朴素贝叶斯分类器**：计算后验概率 $P(y|x)$ 进行分类
 - **贝叶斯参数估计**：最大后验估计（MAP）就是贝叶斯思想的应用
 
@@ -1761,7 +1757,7 @@ $$P(B_1|A) = \frac{P(A|B_1)P(B_1)}{P(A)} = \frac{0.99 \times 0.01}{0.0594} = \fr
 
 ### 3.3 独立性 (#)
 
-## 事件的独立性
+#### 事件的独立性
 
 **直观理解**：两个事件独立，意味着一个事件的发生不影响另一个事件发生的概率。
 
@@ -1800,7 +1796,7 @@ $$P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{P(A)P(B)}{P(B)} = P(A)$$
 
 ---
 
-## 多个事件的独立性
+#### 多个事件的独立性
 
 **两两独立**：$A, B, C$ 两两独立，如果：
 - $P(A \cap B) = P(A)P(B)$
@@ -1814,7 +1810,7 @@ $$P(A \cap B \cap C) = P(A)P(B)P(C)$$
 
 ---
 
-## 条件独立性
+#### 条件独立性
 
 **定义**：给定事件 $C$，$A$ 和 $B$ 条件独立，如果：
 $$P(A \cap B|C) = P(A|C)P(B|C)$$
@@ -1830,7 +1826,7 @@ $$P(A \cap B|C) = P(A|C)P(B|C)$$
 
 ---
 
-## 随机变量的独立性
+#### 随机变量的独立性
 
 **定义**：随机变量 $X$ 和 $Y$ 独立，如果它们的联合分布等于边缘分布的乘积：
 
@@ -1873,7 +1869,7 @@ $$f_{XY}(x, y) = f_X(x) \cdot f_Y(y), \quad \forall x, y$$
 
 ### 4.1 随机变量 (#)
 
-## 什么是随机变量？
+#### 什么是随机变量？
 
 **定义**：从样本空间 $\Omega$ 到实数 $\mathbb{R}$ 的映射 $X: \Omega \to \mathbb{R}$。
 
@@ -1890,7 +1886,7 @@ $$f_{XY}(x, y) = f_X(x) \cdot f_Y(y), \quad \forall x, y$$
 
 ---
 
-## 随机变量的分类
+#### 随机变量的分类
 
 **离散型随机变量**：取值为有限个或可数无限个离散值。
 
@@ -1898,7 +1894,7 @@ $$f_{XY}(x, y) = f_X(x) \cdot f_Y(y), \quad \forall x, y$$
 
 ---
 
-## 分布函数
+#### 分布函数
 
 **累积分布函数 (CDF)**：描述随机变量取值不超过某个数的概率。
 $$F_X(x) = P(X \leq x)$$
@@ -1910,7 +1906,7 @@ $$F_X(x) = P(X \leq x)$$
 
 ---
 
-## 离散型：概率质量函数 (PMF)
+#### 离散型：概率质量函数 (PMF)
 
 **定义**：$p_X(x) = P(X = x)$
 
@@ -1932,7 +1928,7 @@ $$F_X(x) = \begin{cases}
 
 ---
 
-## 连续型：概率密度函数 (PDF)
+#### 连续型：概率密度函数 (PDF)
 
 **定义**：如果 $F_X(x)$ 可导，则：
 $$f_X(x) = \frac{d}{dx}F_X(x)$$
@@ -1973,7 +1969,7 @@ $P(0.3 \leq X \leq 0.7) = 0.7 - 0.3 = 0.4$
 
 ### 4.2 离散分布 (#)
 
-## 常见离散分布一览表
+#### 常见离散分布一览表
 
 | 分布 | 参数 | 概率质量函数 | 期望 | 方差 | 应用场景 |
 |------|------|-------------|------|------|----------|
@@ -1984,7 +1980,7 @@ $P(0.3 \leq X \leq 0.7) = 0.7 - 0.3 = 0.4$
 
 ---
 
-## 1. 伯努利分布 Bernoulli(φ)
+#### 1. 伯努利分布 Bernoulli(φ)
 
 **定义**：单次试验，只有两种结果（成功/失败）。
 
@@ -1997,6 +1993,19 @@ $$P(X = k) = \begin{cases}
 **期望**：$E[X] = 1 \cdot \phi + 0 \cdot (1-\phi) = \phi$
 
 **方差**：
+方差衡量随机变量偏离其期望的平均程度，定义为：
+$$\text{Var}(X) = E[(X - E[X])^2]$$
+
+令 $\mu = E[X]$，则：
+$$\text{Var}(X) = E[(X-\mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu E[X] + \mu^2 = E[X^2] - \mu^2$$
+
+所以常用计算公式是：
+$$\text{Var}(X) = E[X^2] - (E[X])^2$$
+
+对伯努利分布，$X$ 只可能取 0 或 1，因此 $X^2 = X$，所以：
+$$E[X^2] = E[X] = \phi$$
+
+代入方差公式：
 $$\text{Var}(X) = E[X^2] - (E[X])^2 = \phi - \phi^2 = \phi(1-\phi)$$
 
 ---
@@ -2010,7 +2019,7 @@ $\phi = 0.5$
 
 ---
 
-## 2. 二项分布 Binomial(n, φ)
+#### 2. 二项分布 Binomial(n, φ)
 
 **定义**：$n$ 次独立的伯努利试验，成功次数 $X$ 服从二项分布。
 
@@ -2026,8 +2035,42 @@ $$P(X = k) = \binom{n}{k}\phi^k(1-\phi)^{n-k}, \quad k = 0, 1, \dots, n$$
 **方差**：$\text{Var}(X) = n\phi(1-\phi)$
 
 **推导期望**：
-$X = X_1 + X_2 + \dots + X_n$，其中 $X_i$ 是第 $i$ 次试验的结果（伯努利分布）。
-$$E[X] = E[X_1 + \dots + X_n] = E[X_1] + \dots + E[X_n] = n\phi$$
+
+二项分布可以拆成 $n$ 个**独立同分布的伯努利试验**之和。
+
+令 $X_i$ 为第 $i$ 次试验的结果：
+$$X_i = \begin{cases} 1 & \text{成功（概率 } \phi) \\ 0 & \text{失败（概率 } 1-\phi) \end{cases}$$
+
+则 $X_i \sim \text{Bernoulli}(\phi)$，且 $X = X_1 + X_2 + \dots + X_n$。
+
+**单次伯努利试验的期望**：
+$$E[X_i] = 1 \cdot \phi + 0 \cdot (1-\phi) = \phi$$
+
+**由期望的线性性质**（和的期望 = 期望的和，不需要独立）：
+$$E[X] = E[X_1 + \dots + X_n] = E[X_1] + \dots + E[X_n] = \phi + \phi + \dots + \phi = n\phi$$
+
+---
+
+**推导方差**：
+
+先求单次伯努利试验的方差。因为 $X_i$ 只取 0 或 1，所以 $X_i^2 = X_i$，从而 $E[X_i^2] = E[X_i] = \phi$。
+
+$$\begin{aligned}
+\text{Var}(X_i) &= E[X_i^2] - (E[X_i])^2 \\
+&= \phi - \phi^2 \\
+&= \phi(1-\phi)
+\end{aligned}$$
+
+**利用方差的可加性**（注意：要求各变量相互独立，伯努利试验恰好满足）：
+$$\begin{aligned}
+\text{Var}(X) &= \text{Var}(X_1 + \dots + X_n) \\
+&= \text{Var}(X_1) + \dots + \text{Var}(X_n) \\
+&= n\phi(1-\phi)
+\end{aligned}$$
+
+**关键点总结**：
+- 期望的线性性质**不需要**变量独立，任何时候都成立：$E[\sum X_i] = \sum E[X_i]$
+- 方差的可加性**需要**变量相互独立：$\text{Var}(\sum X_i) = \sum \text{Var}(X_i)$（仅当 $X_i$ 两两独立时成立）
 
 ---
 
@@ -2037,8 +2080,11 @@ $$E[X] = E[X_1 + \dots + X_n] = E[X_1] + \dots + E[X_n] = n\phi$$
 $$P(X = 5) = \binom{10}{5} (0.5)^5 (0.5)^5 = \frac{10!}{5!5!} (0.5)^{10} = 252 \times \frac{1}{1024} \approx 0.246$$
 
 **期望和方差**：
-$$E[X] = 10 \times 0.5 = 5$$
-$$\text{Var}(X) = 10 \times 0.5 \times 0.5 = 2.5$$
+$$\begin{aligned}
+E[X] &= 10 \times 0.5 = 5 \quad (\text{抛 10 次平均得到 5 次正面}) \\
+\text{Var}(X) &= 10 \times 0.5 \times 0.5 = 2.5 \\
+\sigma &= \sqrt{\text{Var}(X)} = \sqrt{2.5} \approx 1.58 \quad (\text{标准差，约 68\% 的数据落在 } 5 \pm 1.58 \text{ 内})
+\end{aligned}$$
 
 ---
 
@@ -2059,7 +2105,7 @@ P(X=k)
 
 ---
 
-## 3. 泊松分布 Poisson(λ)
+#### 3. 泊松分布 Poisson(λ)
 
 **定义**：描述单位时间（或空间）内稀有事件发生的次数。
 
@@ -2068,11 +2114,83 @@ P(X=k)
 **概率质量函数**：
 $$P(X = k) = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k = 0, 1, 2, \dots$$
 
-其中 $\lambda > 0$ 是单位时间内的平均发生率。
+其中 $\lambda > 0$ 是单位时间内的平均发生次数（率 × 时间长度）。
 
-**期望**：$E[X] = \lambda$
+---
 
-**方差**：$\text{Var}(X) = \lambda$（期望和方差相等！）
+**泊松分布是如何推导出来的？——从二项分布取极限**
+
+泊松分布实际上是二项分布在 $n \to \infty$、$\phi \to 0$ 且 $n\phi = \lambda$ 保持常数时的极限情况。
+
+从二项分布的 PMF 出发：
+$$P(X = k) = \binom{n}{k}\phi^k(1-\phi)^{n-k}$$
+
+令 $\phi = \frac{\lambda}{n}$（即 $n\phi = \lambda$ 固定），取 $n \to \infty$：
+
+$$\begin{aligned}
+P(X = k) &= \binom{n}{k}\left(\frac{\lambda}{n}\right)^k\left(1-\frac{\lambda}{n}\right)^{n-k} \\[4pt]
+&= \frac{n(n-1)\cdots(n-k+1)}{k!} \cdot \frac{\lambda^k}{n^k} \cdot \left(1-\frac{\lambda}{n}\right)^n \cdot \left(1-\frac{\lambda}{n}\right)^{-k}
+\end{aligned}$$
+
+当 $n \to \infty$ 时：
+
+1. $\frac{n(n-1)\cdots(n-k+1)}{n^k} \to 1$ （分子分母最高次项都是 $n^k$，系数趋近于 1）
+2. $\left(1-\frac{\lambda}{n}\right)^n \to e^{-\lambda}$ （重要极限 $\lim_{n\to\infty}(1+\frac{x}{n})^n = e^x$，这里 $x = -\lambda$）
+3. $\left(1-\frac{\lambda}{n}\right)^{-k} \to 1$ （$\frac{\lambda}{n} \to 0$，该项趋近于 1）
+
+因此：
+$$P(X = k) \to \frac{\lambda^k}{k!} \cdot e^{-\lambda}$$
+
+这就是泊松分布的 PMF。
+
+**直观理解**：当某事件发生的概率很小（$\phi \to 0$），但试验次数非常大（$n \to \infty$）时，事件发生的次数 $k$ 不会太大（因为 $\phi$ 很小），且可以用泊松分布近似二项分布。例如：一小时内大量独立访客访问网站，每人访问的概率都很小，总访问次数近似服从泊松分布。
+
+---
+
+**期望和方差的推导**
+
+**方法一：利用泊松分布与二项分布的关系**
+
+既然泊松分布是二项分布 $B(n, \phi)$ 在 $n \to \infty, \phi \to 0, n\phi = \lambda$ 时的极限：
+- $E[X] = \lim\, n\phi = \lambda$
+- $\text{Var}(X) = \lim\, n\phi(1-\phi) = \lim\, \lambda(1-\phi) = \lambda$（因为 $\phi \to 0$，所以 $1-\phi \to 1$）
+
+**方法二：直接从泊松 PMF 推导期望**
+
+$$\begin{aligned}
+E[X] &= \sum_{k=0}^\infty k \cdot \frac{e^{-\lambda}\lambda^k}{k!} \\
+&= \sum_{k=1}^\infty \frac{e^{-\lambda}\lambda^k}{(k-1)!} \quad (\text{去掉 } k=0 \text{ 的零项，约去 } k) \\
+&= \lambda \sum_{k=1}^\infty \frac{e^{-\lambda}\lambda^{k-1}}{(k-1)!} \\
+&= \lambda \sum_{j=0}^\infty \frac{e^{-\lambda}\lambda^j}{j!} \quad (\text{令 } j = k-1) \\
+&= \lambda \cdot 1 = \lambda
+\end{aligned}$$
+
+最后一步 $\sum_{j=0}^\infty \frac{e^{-\lambda}\lambda^j}{j!} = 1$ 是因为所有概率之和为 1。
+
+**推导方差**：
+
+先求 $E[X^2]$。技巧是将其改写为 $E[X(X-1)] + E[X]$ 的形式，因为 $X(X-1)$ 更容易求和。
+
+$$\begin{aligned}
+E[X(X-1)] &= \sum_{k=0}^\infty k(k-1) \cdot \frac{e^{-\lambda}\lambda^k}{k!} \\
+&= \sum_{k=2}^\infty \frac{e^{-\lambda}\lambda^k}{(k-2)!} \quad (\text{约去 } k(k-1)/k! = 1/(k-2)!) \\
+&= \lambda^2 \sum_{k=2}^\infty \frac{e^{-\lambda}\lambda^{k-2}}{(k-2)!} \\
+&= \lambda^2 \sum_{j=0}^\infty \frac{e^{-\lambda}\lambda^j}{j!} \quad (\text{令 } j = k-2) \\
+&= \lambda^2
+\end{aligned}$$
+
+代入方差公式：
+$$\begin{aligned}
+\text{Var}(X) &= E[X^2] - (E[X])^2 \\
+&= \big(E[X(X-1)] + E[X]\big) - \lambda^2 \\
+&= (\lambda^2 + \lambda) - \lambda^2 = \lambda
+\end{aligned}$$
+
+**关键点总结**：
+- 泊松分布的**期望 = 方差 = $\lambda$**，这是它的独特性质（大多数分布的期望和方差不相等）
+- $\lambda$ 既是均值也是离散度的度量——$\lambda$ 越大，分布越分散
+- 当 $\lambda$ 较大时（如 $\lambda \geq 20$），泊松分布近似正态分布
+- 二项分布 → 泊松分布 → 正态分布是一条从离散到连续的"逼近链"
 
 ---
 
@@ -2103,7 +2221,7 @@ P(X=k)
 
 ---
 
-## 泊松分布与二项分布的关系
+#### 泊松分布与二项分布的关系
 
 当 $n$ 很大、$\phi$ 很小，且 $n\phi = \lambda$ 适中时，二项分布近似于泊松分布：
 $$B(n, \phi) \approx \text{Poi}(\lambda), \quad \text{其中 } \lambda = n\phi$$
@@ -2123,7 +2241,7 @@ $$P(X \leq 2) \approx e^{-3} + 3e^{-3} + \frac{3^2 e^{-3}}{2} = e^{-3}(1 + 3 + 4
 
 ### 4.3 连续分布 (#)
 
-## 常见连续分布一览表
+#### 常见连续分布一览表
 
 | 分布 | 参数 | 概率密度函数 | 期望 | 方差 | 应用场景 |
 |------|------|-------------|------|------|----------|
@@ -2133,7 +2251,7 @@ $$P(X \leq 2) \approx e^{-3} + 3e^{-3} + \frac{3^2 e^{-3}}{2} = e^{-3}(1 + 3 + 4
 
 ---
 
-## 1. 均匀分布 Uniform(a, b)
+#### 1. 均匀分布 Uniform(a, b)
 
 **定义**：在区间 $[a, b]$ 上等可能取值。
 
@@ -2186,7 +2304,7 @@ f(x)
 
 ---
 
-## 2. 正态分布 Normal(μ, σ²)
+#### 2. 正态分布 Normal(μ, σ²)
 
 **定义**：最重要的连续分布，也称为高斯分布。
 
@@ -2231,7 +2349,7 @@ f(x)
 
 ---
 
-## 68-95-99.7 规则（经验法则）
+#### 68-95-99.7 规则（经验法则）
 
 对于任何正态分布 $N(\mu, \sigma^2)$：
 
@@ -2253,7 +2371,7 @@ $$P(55 \leq X \leq 95) = P(75-20 \leq X \leq 75+20) \approx 0.95$$
 
 ---
 
-## 3. 指数分布 Exponential(λ)
+#### 3. 指数分布 Exponential(λ)
 
 **定义**：描述独立随机事件发生的时间间隔。
 
@@ -2318,17 +2436,25 @@ f(x)
 
 ---
 
-## 正态分布与中心极限定理
+#### 正态分布与中心极限定理
 
-**中心极限定理**（预告，后面详述）：大量独立随机变量的和平近似服从正态分布。
+**中心极限定理（Central Limit Theorem, CLT）**（预告，后面 4.7 节详述）：
 
-这就是为什么正态分布在自然界和统计学中如此重要！
+> 大量独立随机变量的**和**（或**均值**）近似服从正态分布，无论这些随机变量本身服从什么分布。
+
+**用例子理解**：
+
+> 抛一枚公平硬币，单次结果是伯努利分布（两点分布）——不是 0 就是 1，离正态分布差远了。但抛 100 次硬币，正面**总次数** $\sum X_i$ 近似服从正态分布！每次抛硬币的结果 $X_i$ 本身完全不服从正态分布（只有两个值），"和"却近似是正态的。
+
+**为什么这很重要？**
+- 自然界中许多现象是大量微小独立因素叠加的结果（如人的身高受无数基因和环境因素影响），因此近似服从正态分布
+- 统计推断中，即使不知道总体的分布，只要样本量够大，样本均值就近似正态分布——这是几乎所有统计检验的基础
 
 ---
 
 ### 4.4 多维随机变量与联合分布 (#)
 
-## 联合分布函数
+#### 联合分布函数
 
 **定义**：对于两个随机变量 $X$ 和 $Y$，联合分布函数定义为：
 $$F_{XY}(x, y) = P(X \leq x, Y \leq y)$$
@@ -2337,7 +2463,7 @@ $$F_{XY}(x, y) = P(X \leq x, Y \leq y)$$
 
 ---
 
-## 离散型：联合概率质量函数
+#### 离散型：联合概率质量函数
 
 **定义**：$p_{XY}(x, y) = P(X = x, Y = y)$
 
@@ -2357,7 +2483,7 @@ $$F_{XY}(x, y) = P(X \leq x, Y \leq y)$$
 
 ---
 
-## 边缘分布
+#### 边缘分布
 
 从联合分布中"边缘化"掉一个变量，得到另一个变量的分布。
 
@@ -2383,7 +2509,7 @@ $$f_Y(y) = \int_{-\infty}^{\infty} f_{XY}(x, y) dx$$
 
 ---
 
-## 条件分布
+#### 条件分布
 
 **定义**：在已知 $X = x$ 的条件下，$Y$ 的分布。
 
@@ -2405,7 +2531,7 @@ $$P(Y=0|X=1) = \frac{P(X=1, Y=0)}{P(X=1)} = \frac{0.1}{0.5} = 0.2$$
 
 ---
 
-## 独立性
+#### 独立性
 
 **定义**：$X$ 和 $Y$ 独立，如果：
 
@@ -2431,7 +2557,7 @@ $$f_{XY}(x, y) = f_X(x) \cdot f_Y(y), \quad \forall x, y$$
 
 ---
 
-## 连续型联合分布的例子
+#### 连续型联合分布的例子
 
 **二维均匀分布**：在单位正方形 $[0,1] \times [0,1]$ 上均匀分布
 
@@ -2447,7 +2573,7 @@ $$f_Y(y) = \int_0^1 1 \cdot dx = 1, \quad 0 \leq y \leq 1$$
 
 ### 4.5 期望、方差与协方差矩阵 (#)
 
-## 期望（Expected Value）
+#### 期望（Expected Value）
 
 **定义**：随机变量的"平均值"或"中心位置"。
 
@@ -2461,7 +2587,7 @@ $$E[X] = \int_{-\infty}^{\infty} x \cdot f(x) dx$$
 
 ---
 
-## 期望的性质
+#### 期望的性质
 
 1. **线性性**（最重要！）：
    $$E[aX + b] = aE[X] + b$$
@@ -2489,7 +2615,7 @@ $$E[X] = 1 \cdot \phi + 0 \cdot (1-\phi) = \phi$$
 
 ---
 
-## 方差（Variance）
+#### 方差（Variance）
 
 **定义**：衡量随机变量取值偏离期望的程度。
 $$\text{Var}(X) = E[(X - E[X])^2]$$
@@ -2504,7 +2630,7 @@ $$\text{Var}(X) = E[(X - \mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu E[X] 
 
 ---
 
-## 方差的性质
+#### 方差的性质
 
 1. $\text{Var}(aX + b) = a^2 \text{Var}(X)$（常数 $b$ 不影响方差）
 
@@ -2530,7 +2656,7 @@ $$\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{91}{6} - (3.5)^2 = \frac{91}{6} - \f
 
 ---
 
-## 协方差（Covariance）
+#### 协方差（Covariance）
 
 **定义**：衡量两个随机变量的"协同变化"程度。
 $$\text{Cov}(X, Y) = E[(X - E[X])(Y - E[Y])]$$
@@ -2545,7 +2671,7 @@ $$\text{Cov}(X, Y) = E[XY] - E[X]E[Y]$$
 
 ---
 
-## 相关系数（Correlation Coefficient）
+#### 相关系数（Correlation Coefficient）
 
 **定义**：标准化的协方差，消除了量纲影响。
 $$\rho_{XY} = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}$$
@@ -2570,7 +2696,7 @@ $$\rho_{12} = \frac{\text{Cov}(X_1, X_2)}{\sqrt{\text{Var}(X_1)\text{Var}(X_2)}}
 
 ---
 
-## 协方差矩阵（Covariance Matrix）
+#### 协方差矩阵（Covariance Matrix）
 
 **定义**：$n$ 维随机向量 $X = [X_1, X_2, \dots, X_n]^T$ 的协方差矩阵是 $n \times n$ 对称矩阵：
 
@@ -2609,7 +2735,7 @@ $$\Sigma = \begin{pmatrix}
 
 ---
 
-## 期望和方差的用途
+#### 期望和方差的用途
 
 | 场景 | 期望 | 方差 |
 |------|------|------|
@@ -2621,7 +2747,7 @@ $$\Sigma = \begin{pmatrix}
 
 ### 4.6 条件期望与全期望公式
 
-## 条件期望（Conditional Expectation）
+#### 条件期望（Conditional Expectation）
 
 **定义**：在已知 $Y = y$ 的条件下，$X$ 的期望值。
 
@@ -2635,7 +2761,7 @@ $$E[X|Y=y] = \int_{-\infty}^{\infty} x \cdot f_{X|Y}(x|y) dx$$
 
 ---
 
-## 全期望公式（Law of Iterated Expectations）
+#### 全期望公式（Law of Iterated Expectations）
 
 **公式**：
 $$E[X] = E[E[X|Y]] = \sum_y E[X|Y=y]P(Y=y)$$
@@ -2676,7 +2802,7 @@ $$E[X] = 0.02 \times 0.6 + 0.05 \times 0.4 = 0.012 + 0.02 = 0.032$$
 
 ---
 
-## 条件期望的性质
+#### 条件期望的性质
 
 1. **线性性**：
    $$E[aX + bY|Z] = aE[X|Z] + bE[Y|Z]$$
@@ -2692,7 +2818,7 @@ $$E[X] = 0.02 \times 0.6 + 0.05 \times 0.4 = 0.012 + 0.02 = 0.032$$
 
 ---
 
-## 条件方差
+#### 条件方差
 
 **定义**：
 $$\text{Var}(X|Y) = E[(X - E[X|Y])^2 | Y]$$
@@ -2706,23 +2832,21 @@ $$\text{Var}(X) = E[\text{Var}(X|Y)] + \text{Var}(E[X|Y])$$
 
 ---
 
-## 第 5 章 统计推断与参数估计
+### 4.7 大数定律与中心极限定理 (#)
 
-> 对照 2026 新版考纲：本章里 `大数定律 / 中心极限定理` 仍是概率部分重点，`MLE / MAP` 保留为旧版衔接内容与开卷补充材料；如果时间紧，闭卷复习先保证前两节与前面分布、期望方差部分。
-
-### 5.1 大数定律与中心极限定理 (#)
-
-## 大数定律（Law of Large Numbers）
+#### 大数定律（Law of Large Numbers）
 
 **问题**：为什么样本均值可以用来估计总体均值？
 
 ---
 
-### 弱大数定律
+#### 弱大数定律
 
 **定理**：设 $X_1, X_2, \dots, X_n$ 是独立同分布的随机变量，期望 $E[X_i] = \mu$，则样本均值 $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ 依概率收敛于 $\mu$：
 
 $$\bar{X}_n \xrightarrow{P} \mu$$
+
+这里的 $\xrightarrow{P}$ 读作**依概率收敛**。它不是说每一次实验的样本均值都一定等于 $\mu$，而是说：当 $n$ 很大时，样本均值明显偏离 $\mu$ 的概率会变得很小。
 
 即：对任意 $\epsilon > 0$，
 $$\lim_{n \to \infty} P(|\bar{X}_n - \mu| < \epsilon) = 1$$
@@ -2739,10 +2863,12 @@ $$\lim_{n \to \infty} P(|\bar{X}_n - \mu| < \epsilon) = 1$$
 
 ---
 
-### 强大数定律
+#### 强大数定律
 
 **定理**：在相同条件下，样本均值几乎必然收敛于总体均值：
 $$P\left(\lim_{n \to \infty} \bar{X}_n = \mu\right) = 1$$
+
+这里的重点是**几乎必然**：把一次无限长的抽样过程看成一条路径，那么除了概率为 0 的异常路径外，这条路径上的样本均值最终会收敛到 $\mu$。
 
 **强弱区别**：
 - 弱大数：差距小的概率趋近于 1
@@ -2750,19 +2876,30 @@ $$P\left(\lim_{n \to \infty} \bar{X}_n = \mu\right) = 1$$
 
 ---
 
-## 中心极限定理（Central Limit Theorem, CLT）
+#### 中心极限定理（Central Limit Theorem, CLT）
 
 **问题**：样本均值的分布是什么？
 
 ---
 
-### 林德伯格 - 列维中心极限定理
+#### 林德伯格 - 列维中心极限定理
 
 **定理**：设 $X_1, X_2, \dots, X_n$ 是独立同分布的随机变量，期望 $E[X_i] = \mu$，方差 $\text{Var}(X_i) = \sigma^2 > 0$，则：
 
-$$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
+$$\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
-其中 $\bar{X} = \frac{1}{n}\sum_{i=1}^{n} X_i$。
+其中 $\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i$。
+
+这里的 $\xrightarrow{d}$ 读作**依分布收敛**，意思是：左边这个随机变量的分布形状，在 $n$ 变大时越来越接近标准正态分布 $N(0,1)$。它不是说左边的数值一定等于某个固定值，而是说它的概率分布越来越像标准正态分布。
+
+这个公式可以拆成两层理解：
+- $\bar{X}_n$ 是样本均值，它的中心在 $\mu$ 附近。
+- $\frac{\bar{X}_n-\mu}{\sigma/\sqrt{n}}$ 是标准化：先减去均值 $\mu$，再除以样本均值的标准差 $\sigma/\sqrt{n}$，于是变成均值 0、方差 1 的尺度。
+
+因此中心极限定理常用的近似写法是：
+$$\bar{X}_n \approx N\left(\mu, \frac{\sigma^2}{n}\right)$$
+
+也就是说，样本均值本身近似服从均值为 $\mu$、方差为 $\frac{\sigma^2}{n}$ 的正态分布。
 
 ---
 
@@ -2775,7 +2912,9 @@ $\bar{X}$ 的方差：
 $$\text{Var}(\bar{X}) = \text{Var}\left(\frac{1}{n}\sum_{i=1}^n X_i\right) = \frac{1}{n^2}\sum_{i=1}^n \text{Var}(X_i) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}$$
 
 标准化：
-$$Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1) \quad (\text{当 } n \to \infty)$$
+$$Z_n = \frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
+
+严格说，若原始 $X_i$ 本身不是正态分布，则有限样本下 $Z_n$ 通常并不**恰好**服从 $N(0,1)$，只是当 $n$ 越来越大时越来越接近标准正态分布。
 
 ---
 
@@ -2795,20 +2934,20 @@ $$Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1) \quad (\text{当 } n \t
 
 **解**：
 
-样本均值 $\bar{X}$ 近似服从：
-$$\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right) = N\left(75, \frac{100}{100}\right) = N(75, 1)$$
+样本均值 $\bar{X}_n$ 近似服从：
+$$\bar{X}_n \approx N\left(\mu, \frac{\sigma^2}{n}\right) = N\left(75, \frac{100}{100}\right) = N(75, 1)$$
 
 标准化：
 $$Z = \frac{77 - 75}{10/\sqrt{100}} = \frac{2}{1} = 2$$
 
 查标准正态分布表：
-$$P(\bar{X} > 77) = P(Z > 2) \approx 0.0228$$
+$$P(\bar{X}_n > 77) = P(Z > 2) \approx 0.0228$$
 
 结论：样本均值大于 77 的概率约 2.3%，是小概率事件。
 
 ---
 
-## 大数定律 vs 中心极限定理
+#### 大数定律 vs 中心极限定理
 
 | | 大数定律 | 中心极限定理 |
 |---|---|---|
@@ -2818,9 +2957,11 @@ $$P(\bar{X} > 77) = P(Z > 2) \approx 0.0228$$
 
 ---
 
-### 5.2 极大似然估计 (MLE)
+### 附：极大似然估计 (MLE)
 
-## 统计推断的基本问题
+> 本节不属于 2026 新版“人工智能数学基础”模块的第 1-9 章正式编号，保留为旧版衔接与开卷补充材料。
+
+#### 统计推断的基本问题
 
 **已知**：从某个分布中抽取的样本 $x_1, x_2, \dots, x_n$
 
@@ -2830,7 +2971,7 @@ $$P(\bar{X} > 77) = P(Z > 2) \approx 0.0228$$
 
 ---
 
-## 极大似然估计的思想
+#### 极大似然估计的思想
 
 **核心想法**：选择使观测数据出现概率最大的参数值。
 
@@ -2838,7 +2979,7 @@ $$P(\bar{X} > 77) = P(Z > 2) \approx 0.0228$$
 
 ---
 
-## 似然函数
+#### 似然函数
 
 **定义**：
 $$L(\theta; x_1, \dots, x_n) = \prod_{i=1}^{n} f(x_i; \theta)$$
@@ -2849,24 +2990,26 @@ $$L(\theta; x_1, \dots, x_n) = \prod_{i=1}^{n} f(x_i; \theta)$$
 
 ---
 
-## 对数似然函数
+#### 对数似然函数
 
 取对数简化计算（乘积变求和，不影响最大值位置）：
 $$\ell(\theta) = \ln L(\theta) = \sum_{i=1}^{n} \ln f(x_i; \theta)$$
 
 ---
 
-## MLE 估计量
+#### MLE 估计量
 
 **定义**：
 $$\hat{\theta}_{MLE} = \arg\max_{\theta} \ell(\theta)$$
+
+这里的 $\arg\max$ 表示“让后面那个函数取得最大值的参数”。所以这句话不是在求最大的似然值本身，而是在求哪个 $\theta$ 能让对数似然 $\ell(\theta)$ 最大。
 
 **求解方法**：求导并令其为 0
 $$\frac{\partial \ell(\theta)}{\partial \theta} = 0$$
 
 ---
 
-## 例题 1：伯努利分布的 MLE
+#### 例题 1：伯努利分布的 MLE
 
 **问题**：抛 $n$ 次硬币，观测到有 $k$ 次正面，估计正面概率 $\phi$。
 
@@ -2891,7 +3034,7 @@ $$\hat{\phi}_{MLE} = \frac{k}{n}$$
 
 ---
 
-## 例题 2：高斯分布的 MLE
+#### 例题 2：高斯分布的 MLE
 
 **问题**：$X_1, \dots, X_n \sim N(\mu, \sigma^2)$，估计 $\mu$ 和 $\sigma^2$。
 
@@ -2931,11 +3074,15 @@ $$\hat{\sigma}^2_{MLE} = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2$$
 
 ---
 
-## MLE 的性质
+#### MLE 的性质
 
 1. **一致性**：$\hat{\theta}_{MLE} \xrightarrow{P} \theta$（样本量增大时收敛于真值）
 
+   读法：估计值 $\hat{\theta}_{MLE}$ 依概率收敛到真实参数 $\theta$。直观上，样本越多，MLE 估计越不容易偏离真值。
+
 2. **渐近正态性**：$\sqrt{n}(\hat{\theta}_{MLE} - \theta) \xrightarrow{d} N(0, I^{-1}(\theta))$
+
+   读法：把估计误差 $\hat{\theta}_{MLE}-\theta$ 乘上 $\sqrt{n}$ 后，它的分布会趋近于正态分布。这里的 $\sqrt{n}$ 暗示估计误差通常是 $\frac{1}{\sqrt{n}}$ 量级；$I(\theta)$ 是 Fisher 信息，$I^{-1}(\theta)$ 表示渐近方差。
 
 3. **渐近有效性**：MLE 是渐近最优的无偏估计
 
@@ -2943,9 +3090,9 @@ $$\hat{\sigma}^2_{MLE} = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2$$
 
 ---
 
-### 5.3 最大后验估计 (MAP)
+### 附：最大后验估计 (MAP)
 
-## 贝叶斯观点
+#### 贝叶斯观点
 
 **频率学派**：参数 $\theta$ 是固定的未知常数
 
@@ -2953,7 +3100,7 @@ $$\hat{\sigma}^2_{MLE} = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2$$
 
 ---
 
-## 贝叶斯定理
+#### 贝叶斯定理
 
 **后验分布**：
 $$P(\theta|D) = \frac{P(D|\theta)P(\theta)}{P(D)} = \frac{L(\theta)P(\theta)}{P(D)}$$
@@ -2966,18 +3113,20 @@ $$P(\theta|D) = \frac{P(D|\theta)P(\theta)}{P(D)} = \frac{L(\theta)P(\theta)}{P(
 
 ---
 
-## 最大后验估计（MAP）
+#### 最大后验估计（MAP）
 
 **思想**：选择使后验概率最大的参数值。
 
 $$\hat{\theta}_{MAP} = \arg\max_{\theta} P(\theta|D) = \arg\max_{\theta} L(\theta)P(\theta)$$
+
+这里第二个等号用到了 $P(D)$ 与 $\theta$ 无关：最大化后验 $P(\theta|D)$ 时，分母 $P(D)$ 只是常数，可以忽略。因此 MAP 等价于最大化“似然 × 先验”。
 
 **对数形式**：
 $$\hat{\theta}_{MAP} = \arg\max_{\theta} [\ell(\theta) + \ln P(\theta)]$$
 
 ---
 
-## MLE vs MAP
+#### MLE vs MAP
 
 | | MLE | MAP |
 |---|---|---|
@@ -2993,7 +3142,7 @@ $$\hat{\theta}_{MAP} = \arg\max_{\theta} [\ell(\theta) + \ln P(\theta)]$$
 
 ---
 
-## 例题：高斯分布均值的高斯先验 MAP 估计
+#### 例题：高斯分布均值的高斯先验 MAP 估计
 
 **问题**：$X_i \sim N(\mu, \sigma^2)$，先验 $\mu \sim N(0, \tau^2)$，求 $\mu$ 的 MAP 估计。
 
@@ -3040,14 +3189,16 @@ $$\hat{\mu}_{MAP} = \frac{\frac{n}{\sigma^2}\bar{x}}{\frac{n}{\sigma^2} + \frac{
    $$\hat{\mu}_{MAP} \to \bar{x} = \hat{\mu}_{MLE}$$
 
 2. **先验非常强**（$\tau^2 \to 0$）：
-   $$\hat{\mu}_{MAP} \to 0$$（先验均值）
+   $$\hat{\mu}_{MAP} \to 0$$
+   即趋向先验均值。
 
 3. **样本量很大**（$n \to \infty$）：
-   $$\hat{\mu}_{MAP} \to \bar{x} = \hat{\mu}_{MLE}$$（数据主导）
+   $$\hat{\mu}_{MAP} \to \bar{x} = \hat{\mu}_{MLE}$$
+   即由数据主导。
 
 ---
 
-## MAP 与正则化的关系
+#### MAP 与正则化的关系
 
 **例子**：线性回归 $y = w^T x + \epsilon$
 
@@ -3065,13 +3216,11 @@ $$\hat{\mu}_{MAP} = \frac{\frac{n}{\sigma^2}\bar{x}}{\frac{n}{\sigma^2} + \frac{
 
 # 第三部分：最优化理论与方法
 
-# 第三部分：最优化理论与方法
+## 第 5 章 多元微积分基础
 
-## 第 6 章 多元微积分基础
+### 5.1 多元函数的偏导数与梯度 (#)
 
-### 6.1 多元函数的偏导数与梯度 (#)
-
-## 为什么需要多元微积分？
+#### 为什么需要多元微积分？
 
 在机器学习中，损失函数通常依赖于多个参数：
 $$L(w_1, w_2, \dots, w_n) = \sum_{i=1}^{n} (y_i - f(x_i; w))^2$$
@@ -3080,7 +3229,7 @@ $$L(w_1, w_2, \dots, w_n) = \sum_{i=1}^{n} (y_i - f(x_i; w))^2$$
 
 ---
 
-## 偏导数（Partial Derivative）
+#### 偏导数（Partial Derivative）
 
 **定义**：多元函数 $f(x_1, x_2, \dots, x_n)$ 对第 $i$ 个变量的偏导数，是固定其他变量不变，只对 $x_i$ 求导：
 
@@ -3112,11 +3261,23 @@ $$\frac{\partial f}{\partial z} = 2yz + xy$$
 
 ---
 
-## 梯度（Gradient）
+#### 梯度（Gradient）
 
 **定义**：梯度是所有一阶偏导数组成的向量：
 
 $$\nabla f(x) = \begin{pmatrix} \frac{\partial f}{\partial x_1} \\ \frac{\partial f}{\partial x_2} \\ \vdots \\ \frac{\partial f}{\partial x_n} \end{pmatrix}$$
+
+**本笔记约定**：把变量 $x$ 看成列向量，因此梯度 $\nabla f(x)$ 也写成列向量。
+
+如果 $x \in \mathbb{R}^n$，则：
+$$x \in \mathbb{R}^{n \times 1}, \quad \nabla f(x) \in \mathbb{R}^{n \times 1}$$
+
+这样梯度下降的维度是匹配的：
+$$x_{k+1} = x_k - \eta \nabla f(x_k)$$
+
+其中 $x_k$ 和 $\nabla f(x_k)$ 都是 $n \times 1$ 列向量。
+
+有些教材把梯度写成行向量，这是另一种约定。只要全书保持一致即可；本笔记统一采用“梯度为列向量”的优化 / 机器学习常用写法。
 
 **记号**：$\nabla f$、$\text{grad} f$
 
@@ -3130,7 +3291,7 @@ $$\nabla f(x, y) = \begin{pmatrix} 2x + 2y \\ 2x + 2y \end{pmatrix}$$
 
 ---
 
-## 梯度的几何意义
+#### 梯度的几何意义
 
 **核心性质**：
 1. **方向**：梯度指向函数增长最快的方向
@@ -3163,7 +3324,7 @@ $$\max_{\|v\|=1} D_v f(x) = \|\nabla f(x)\|$$
 
 ---
 
-## 梯度的性质
+#### 梯度的性质
 
 1. **线性性**：
    $$\nabla (af + bg) = a\nabla f + b\nabla g$$
@@ -3175,9 +3336,11 @@ $$\max_{\|v\|=1} D_v f(x) = \|\nabla f(x)\|$$
    如果 $h(x) = f(g(x))$，则
    $$\nabla h(x) = J_g(x)^T \nabla f(g(x))$$
 
+   这里的 $J_g(x)$ 是内层向量函数 $g$ 的雅可比矩阵。因为本笔记把梯度写成列向量，所以公式里需要 $J_g(x)^T$ 来保证维度匹配；详细解释见 5.3 节“向量形式的链式法则”。
+
 ---
 
-## 方向导数
+#### 方向导数
 
 **定义**：函数沿单位向量 $v$ 方向的变化率：
 
@@ -3190,9 +3353,9 @@ $$D_v f(x) = \nabla f(x) \cdot v$$
 
 ---
 
-### 6.2 雅可比矩阵与海森矩阵 (#)
+### 5.2 雅可比矩阵与海森矩阵 (#)
 
-## 雅可比矩阵（Jacobian Matrix）
+#### 雅可比矩阵（Jacobian Matrix）
 
 **适用对象**：向量值函数 $f: \mathbb{R}^n \to \mathbb{R}^m$
 
@@ -3225,11 +3388,13 @@ $$J_f(x, y) = \begin{pmatrix}
 - $W \in \mathbb{R}^{m \times n}$，$x \in \mathbb{R}^n$，$b \in \mathbb{R}^m$
 - $f: \mathbb{R}^n \to \mathbb{R}^m$
 
-$$J_f(x) = W$$（常数矩阵，与 $x$ 无关）
+$$J_f(x) = W$$
+
+这是常数矩阵，与 $x$ 无关。
 
 ---
 
-## 海森矩阵（Hessian Matrix）
+#### 海森矩阵（Hessian Matrix）
 
 **适用对象**：标量函数 $f: \mathbb{R}^n \to \mathbb{R}$
 
@@ -3268,7 +3433,7 @@ $$H_f(x, y) = \begin{pmatrix} 6x & 2 \\ 2 & 2 \end{pmatrix}$$
 
 ---
 
-## 海森矩阵的几何意义
+#### 海森矩阵的几何意义
 
 海森矩阵描述函数的"曲率"：
 
@@ -3283,7 +3448,7 @@ $$H_f(x, y) = \begin{pmatrix} 6x & 2 \\ 2 & 2 \end{pmatrix}$$
 
 ---
 
-## 梯度、雅可比、海森的关系
+#### 梯度、雅可比、海森的关系
 
 | 对象 | 函数类型 | 结果 |
 |------|----------|------|
@@ -3298,9 +3463,9 @@ $$H_f(x, y) = \begin{pmatrix} 6x & 2 \\ 2 & 2 \end{pmatrix}$$
 
 ---
 
-### 6.3 链式法则 (#)
+### 5.3 链式法则 (#)
 
-## 单变量链式法则（复习）
+#### 单变量链式法则（复习）
 
 $z = f(y), y = g(x)$
 
@@ -3314,7 +3479,7 @@ $$\frac{dz}{dx} = \frac{dz}{dy} \cdot \frac{dy}{dx} = e^y \cdot 2x = 2xe^{x^2}$$
 
 ---
 
-## 多变量链式法则（情况 1）
+#### 多变量链式法则（情况 1）
 
 $z = f(x_1, \dots, x_n)$，每个 $x_i$ 都是 $t$ 的函数：$x_i = x_i(t)$
 
@@ -3335,7 +3500,7 @@ $$z = \cos^2 t + \sin^2 t = 1 \Rightarrow \frac{dz}{dt} = 0$$
 
 ---
 
-## 多变量链式法则（情况 2）
+#### 多变量链式法则（情况 2）
 
 $z = f(x, y)$，$x = x(u, v)$，$y = y(u, v)$
 
@@ -3356,11 +3521,43 @@ $$\frac{\partial z}{\partial v} = \frac{\partial z}{\partial x}\frac{\partial x}
 
 ---
 
-## 向量形式的链式法则
+#### 向量形式的链式法则
 
 $f: \mathbb{R}^n \to \mathbb{R}$，$g: \mathbb{R}^m \to \mathbb{R}^n$，$h(x) = f(g(x))$
 
 $$\nabla h(x) = J_g(x)^T \nabla f(g(x))$$
+
+这里的 $J_g(x)$ 是 **Jacobian（雅可比矩阵）**，表示内层向量函数 $g$ 对输入 $x$ 的导数。
+
+令：
+$$y = g(x), \quad h(x) = f(y)$$
+
+则一元链式法则的直觉仍然是：
+$$\frac{dh}{dx} = \frac{df}{dy}\frac{dy}{dx}$$
+
+只是现在 $y$ 是向量，$x$ 也是向量，$\frac{dy}{dx}$ 不再是一个数，而是一个矩阵。把所有偏导数排起来，就是：
+$$J_g(x) =
+\begin{pmatrix}
+\frac{\partial g_1}{\partial x_1} & \frac{\partial g_1}{\partial x_2} & \cdots & \frac{\partial g_1}{\partial x_m} \\
+\frac{\partial g_2}{\partial x_1} & \frac{\partial g_2}{\partial x_2} & \cdots & \frac{\partial g_2}{\partial x_m} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial g_n}{\partial x_1} & \frac{\partial g_n}{\partial x_2} & \cdots & \frac{\partial g_n}{\partial x_m}
+\end{pmatrix} \in \mathbb{R}^{n \times m}$$
+
+**为什么公式里有转置？**
+
+因为本笔记采用“梯度是列向量”的约定：
+$$\nabla f(g(x)) \in \mathbb{R}^{n \times 1}, \quad J_g(x) \in \mathbb{R}^{n \times m}$$
+
+所以必须写成：
+$$J_g(x)^T \nabla f(g(x)) \in \mathbb{R}^{m \times 1}$$
+
+而 $\nabla h(x)$ 是关于 $x$ 的梯度，本来就应该是 $m \times 1$ 列向量。
+
+**直观理解**：
+- $\nabla f(g(x))$：外层函数 $f$ 对中间变量 $y=g(x)$ 的敏感度
+- $J_g(x)$：中间变量 $y$ 对原变量 $x$ 的敏感度
+- 两者合起来：复合函数 $h(x)=f(g(x))$ 对 $x$ 的敏感度
 
 ---
 
@@ -3372,11 +3569,13 @@ $h(x) = \|Ax + b\|^2$，求 $\nabla h(x)$
 - $\nabla f(y) = 2y$
 - $J_g(x) = A$
 
+因为 $g(x)=Ax+b$ 是线性函数，$y$ 对 $x$ 的导数就是矩阵 $A$，所以这里的雅可比矩阵为 $A$。
+
 $$\nabla h(x) = A^T \cdot 2(Ax + b) = 2A^T(Ax + b)$$
 
 ---
 
-## 链式法则在神经网络中的应用
+#### 链式法则在神经网络中的应用
 
 **反向传播算法的核心就是链式法则！**
 
@@ -3394,13 +3593,13 @@ $$\frac{\partial L}{\partial W} = \frac{\partial L}{\partial \hat{y}} \cdot \fra
 
 ---
 
-## 第 7 章 最优化基础
+## 第 6 章 最优化基础
 
 优化问题的核心是找到使目标函数最小化（或最大化）的变量值。在机器学习中，这对应于找到使损失函数最小的模型参数。
 
-### 7.1 凸集与凸函数 (#)
+### 6.1 凸集与凸函数 (#)
 
-## 一、凸集（Convex Set）
+#### 一、凸集（Convex Set）
 
 **定义**：集合 $C \subseteq \mathbb{R}^n$ 是凸集，如果对于任意两点 $x, y \in C$ 和任意 $\theta \in [0, 1]$，有：
 $$\theta x + (1-\theta)y \in C$$
@@ -3483,7 +3682,7 @@ $$a^T z \leq \theta b + (1-\theta)b = b$$
 
 ---
 
-## 二、凸函数（Convex Function）
+#### 二、凸函数（Convex Function）
 
 **定义**：函数 $f: C \to \mathbb{R}$（$C$ 是凸集）是凸函数，如果对于任意 $x, y \in C$ 和任意 $\theta \in [0, 1]$，有：
 $$f(\theta x + (1-\theta)y) \leq \theta f(x) + (1-\theta)f(y)$$
@@ -3518,12 +3717,14 @@ $$f(\theta x + (1-\theta)y) \geq \theta f(x) + (1-\theta)f(y)$$
 
 ---
 
-## 三、凸函数的判定方法
+#### 三、凸函数的判定方法
 
-### 方法 1：一阶条件（可微函数）
+#### 方法 1：一阶条件（可微函数）
 
 **定理**：可微函数 $f$ 是凸函数，当且仅当：
 $$f(y) \geq f(x) + \nabla f(x)^T(y - x), \quad \forall x, y \in C$$
+
+读法：右边是函数在 $x$ 点的一阶线性近似，也就是切线 / 切平面；凸函数要求任意点 $y$ 的真实函数值都不低于这条切线 / 切平面给出的值。
 
 **几何解释**：
 
@@ -3565,10 +3766,12 @@ $$y^2 - 2xy + x^2 \geq 0 \iff (y-x)^2 \geq 0$$
 
 ---
 
-### 方法 2：二阶条件（二阶可微函数）
+#### 方法 2：二阶条件（二阶可微函数）
 
 **定理**：二阶可微函数 $f$ 是凸函数，当且仅当其海森矩阵半正定：
 $$\nabla^2 f(x) \succeq 0, \quad \forall x \in C$$
+
+这里的 $\succeq 0$ 表示半正定。直观上，海森矩阵描述函数的弯曲方向；半正定表示函数在任何方向上都不会向下弯，所以函数是凸的。
 
 **一元函数**：$f''(x) \geq 0$
 
@@ -3608,7 +3811,7 @@ $$H_f(x, y) = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}$$
 
 ---
 
-### 方法 3：保凸运算
+#### 方法 3：保凸运算
 
 以下运算保持凸性：
 
@@ -3619,7 +3822,7 @@ $$H_f(x, y) = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}$$
 
 ---
 
-## 四、常见凸函数一览表
+#### 四、常见凸函数一览表
 
 | 函数 | 定义域 | 凸性 | 验证方法 |
 |------|--------|------|----------|
@@ -3633,7 +3836,7 @@ $$H_f(x, y) = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}$$
 
 ---
 
-## 五、凸函数的重要性质
+#### 五、凸函数的重要性质
 
 1. **局部最小值 = 全局最小值**
    - 凸函数的任何局部最小值都是全局最小值
@@ -3657,9 +3860,9 @@ $$(E[X])^2 \leq E[X^2]$$
 
 ---
 
-### 7.2 L-光滑性与强凸性
+### 6.2 L-光滑性与强凸性
 
-## 一、L-光滑性（L-Smoothness）
+#### 一、L-光滑性（L-Smoothness）
 
 **定义**：可微函数 $f$ 是 $L$-光滑的，如果其梯度是 $L$-Lipschitz 连续的：
 $$\|\nabla f(x) - \nabla f(y)\| \leq L\|x - y\|, \quad \forall x, y$$
@@ -3667,6 +3870,8 @@ $$\|\nabla f(x) - \nabla f(y)\| \leq L\|x - y\|, \quad \forall x, y$$
 其中 $L > 0$ 称为光滑常数。
 
 **直观理解**：梯度的变化速度有上界。函数图像不会"太弯曲"。
+
+读法：当 $x$ 和 $y$ 很接近时，两个点的梯度也不能突然差很多。$L$ 越大，允许函数弯得越厉害；$L$ 越小，函数越平滑，梯度下降的步长通常也更容易选。
 
 ---
 
@@ -3679,8 +3884,15 @@ $$\|\nabla f(x) - \nabla f(y)\| \leq L\|x - y\|, \quad \forall x, y$$
 2. **二次上界**：
    $$f(y) \leq f(x) + \nabla f(x)^T(y-x) + \frac{L}{2}\|y-x\|^2$$
 
+   读法：函数值不会超过“切线 / 切平面 + 一个开口由 $L$ 控制的二次项”。这就是“弯曲程度有上界”的公式化表达。
+
 3. **海森矩阵有界**（二阶可微时）：
-   $$\nabla^2 f(x) \preceq LI$$
+   $$\|\nabla^2 f(x)\|_2 \leq L$$
+
+   读法：二阶导数 / 曲率的大小最多是 $L$。对二次函数来说，这个 $L$ 就对应最大特征值。
+
+   如果 $f$ 已知为凸函数，也常写成：
+   $$0 \preceq \nabla^2 f(x) \preceq LI$$
 
 ---
 
@@ -3697,7 +3909,7 @@ $$|\nabla f(x) - \nabla f(y)| = |Lx - Ly| = L|x - y|$$
 
 ---
 
-**例题 2**：验证 $f(x) = \frac{1}{2}x^T Ax$ 是 $L$-光滑的，其中 $L = \lambda_{\max}(A)$（$A$ 的最大特征值）。
+**例题 2**：验证 $f(x) = \frac{1}{2}x^T Ax$ 是 $L$-光滑的，其中 $A$ 为对称半正定矩阵，$L = \lambda_{\max}(A)$（$A$ 的最大特征值）。
 
 **解**：
 
@@ -3731,7 +3943,7 @@ L-光滑函数的图像始终在"切线 + 抛物线"下方
 
 ---
 
-## 二、μ-强凸性（μ-Strong Convexity）
+#### 二、μ-强凸性（μ-Strong Convexity）
 
 **定义**：函数 $f$ 是 $\mu$-强凸的，如果：
 $$f(y) \geq f(x) + \nabla f(x)^T(y-x) + \frac{\mu}{2}\|y-x\|^2, \quad \forall x, y$$
@@ -3739,6 +3951,8 @@ $$f(y) \geq f(x) + \nabla f(x)^T(y-x) + \frac{\mu}{2}\|y-x\|^2, \quad \forall x,
 其中 $\mu > 0$。
 
 **直观理解**：函数"足够弯曲"，不是平坦的。
+
+读法：普通凸函数只要求函数图像在切线 / 切平面上方；强凸函数还要求它至少高出一个由 $\mu$ 控制的二次弯曲量。因此强凸函数不只是“不向下弯”，还必须“向上弯得足够多”。
 
 ---
 
@@ -3764,12 +3978,14 @@ $$f(y) \geq f(x) + \nabla f(x)^T(y-x) + \frac{\mu}{2}\|y-x\|^2, \quad \forall x,
 
 ---
 
-## 三、L-光滑且 μ-强凸函数
+#### 三、L-光滑且 μ-强凸函数
 
 **定义**：函数 $f$ 同时是 $L$-光滑和 $\mu$-强凸的，如果：
 $$\mu I \preceq \nabla^2 f(x) \preceq LI$$
 
 即海森矩阵的特征值在 $[\mu, L]$ 范围内。
+
+这里的矩阵不等式可以按特征值理解：所有曲率都至少是 $\mu$，所以不会太平；所有曲率都最多是 $L$，所以不会太陡。优化算法的难度主要取决于最大曲率和最小曲率差得有多远。
 
 **条件数**：$\kappa = \frac{L}{\mu}$ 称为条件数。
 
@@ -3797,19 +4013,23 @@ $$\mu I \preceq \nabla^2 f(x) \preceq LI$$
 
 ---
 
-## 四、在优化中的应用
+#### 四、在优化中的应用
 
-### 梯度下降收敛速率
+#### 梯度下降收敛速率
 
 **定理**：如果 $f$ 是 $L$-光滑的凸函数，梯度下降使用步长 $\eta = \frac{1}{L}$，则：
 $$f(x_k) - f(x^*) \leq \frac{L\|x_0 - x^*\|^2}{2k}$$
 
 即收敛速率为 $O(1/k)$。
 
+读法：左边是第 $k$ 次迭代后距离最优函数值还差多少；右边随着 $k$ 增大按 $\frac{1}{k}$ 下降。因此迭代次数翻倍，误差上界大约减半。
+
 **定理**：如果 $f$ 是 $L$-光滑且 $\mu$-强凸的，梯度下降使用步长 $\eta = \frac{1}{L}$，则：
 $$\|x_k - x^*\|^2 \leq \left(1 - \frac{\mu}{L}\right)^k \|x_0 - x^*\|^2$$
 
 即**线性收敛**（几何收敛）！
+
+读法：每迭代一次，误差都会乘上一个小于 1 的固定比例 $\left(1-\frac{\mu}{L}\right)$。这比 $O(1/k)$ 快得多；$\frac{\mu}{L}$ 越大，收敛越快。
 
 ---
 
@@ -3828,69 +4048,52 @@ $$f(x_{k+1}) \leq f(x_k) - \frac{1}{2L}\|\nabla f(x_k)\|^2$$
 
 ---
 
-### 收敛速率对比表
+#### 收敛速率对比表
 
 | 函数类型 | 收敛速率 | 说明 |
 |----------|----------|------|
 | 一般凸 + L-光滑 | $O(1/k)$ | 次线性收敛 |
 | μ-强凸 + L-光滑 | $O((1-\mu/L)^k)$ | 线性收敛 |
-| 二阶方法（牛顿） | $O(c^{-k})$ | 二次收敛（更快） |
+| 二阶方法（牛顿） | 误差近似平方下降 | 二次收敛（局部） |
 
 ---
 
-### 7.3 典型优化问题模型 (#)
+### 6.3 典型优化问题模型 (#)
 
-## 一、线性规划（Linear Programming, LP）
+#### 一、线性回归（Linear Regression）
 
-**标准形式**：
-$$\min_x c^T x \quad \text{s.t.} \quad Ax = b, \quad x \geq 0$$
+**问题**：给定样本 $(x_i, y_i)$，用线性模型预测连续值：
+$$\hat{y}_i = w^T x_i + b$$
+
+**最小二乘优化问题**：
+$$\min_{w,b} \frac{1}{2}\sum_{i=1}^{n}(w^T x_i + b - y_i)^2$$
+
+读法：让所有样本的预测误差平方和尽量小。平方损失会惩罚较大的预测误差，因此线性回归本质上是一个最小化二次函数的问题。
+
+---
+
+**矩阵形式**：
+
+把偏置 $b$ 合并进参数，记设计矩阵为 $X$、标签向量为 $y$，则：
+$$\min_w \frac{1}{2}\|Xw-y\|^2$$
+
+梯度为：
+$$\nabla f(w) = X^T(Xw-y)$$
+
+令梯度为 0，得到正规方程：
+$$X^TXw = X^Ty$$
+
+如果 $X^TX$ 可逆，则闭式解为：
+$$w^* = (X^TX)^{-1}X^Ty$$
 
 **特点**：
-- 目标函数是线性的
-- 约束是线性的
-- 可行域是凸多面体
+- 目标函数是凸二次函数
+- 有闭式解，也可以用梯度下降求解
+- 岭回归是在最小二乘后面加 $L_2$ 正则项
 
 ---
 
-**例题 1**：生产计划问题
-
-某工厂生产两种产品，利润和资源消耗如下：
-
-| 产品 | 利润（万） | 工时 | 原料（吨） |
-|------|-----------|------|-----------|
-| A | 2 | 1 | 2 |
-| B | 3 | 2 | 1 |
-
-资源限制：工时 100，原料 80 吨。求最大利润。
-
-**建模**：
-
-设 $x_1$ = 产品 A 产量，$x_2$ = 产品 B 产量
-
-$$\max 2x_1 + 3x_2$$
-$$\text{s.t.} \begin{cases} x_1 + 2x_2 \leq 100 \quad \text{（工时）} \\ 2x_1 + x_2 \leq 80 \quad \text{（原料）} \\ x_1, x_2 \geq 0 \end{cases}$$
-
-**图解法**：
-
-```
-x₂
- │
- │  x₁ + 2x₂ = 100
-50├──●────────
- │  │＼      │
- │  │  ＼    │
-40├──┼────●──┤ 2x₁ + x₂ = 80
- │  │    │＼ │
- │  │  可行域│＼
- 0 └──┴────┴──┴──→ x₁
-     0   40  50 100
-
-最优解在顶点处，可通过单纯形法求解
-```
-
----
-
-## 二、逻辑回归（Logistic Regression）
+#### 二、逻辑回归（Logistic Regression）
 
 **问题**：二分类问题，标签 $y_i \in \{0, 1\}$
 
@@ -3919,7 +4122,7 @@ $$\nabla_w \mathcal{L}(w) = \sum_{i=1}^{n} (\hat{y}_i - y_i)x_i$$
 
 ---
 
-## 三、支持向量机（Support Vector Machine, SVM）
+#### 三、支持向量机（Support Vector Machine, SVM）
 
 **问题**：二分类，寻找最大间隔超平面
 
@@ -3960,7 +4163,7 @@ $$\text{s.t.} \quad \sum_{i=1}^{n} \alpha_i y_i = 0, \quad 0 \leq \alpha_i \leq 
 
 ---
 
-## 四、主成分分析（Principal Component Analysis, PCA）
+#### 四、主成分分析（Principal Component Analysis, PCA）
 
 **问题**：寻找数据的"主方向"（方差最大的方向）
 
@@ -3999,11 +4202,11 @@ $$\nabla_w L = 2\Sigma w - 2\lambda w = 0 \Rightarrow \Sigma w = \lambda w$$
 
 ---
 
-## 五、典型优化问题对比
+#### 五、典型优化问题对比
 
 | 问题 | 目标函数 | 约束 | 解法 |
 |------|----------|------|------|
-| 线性规划 | $c^T x$ | $Ax \leq b$ | 单纯形法、内点法 |
+| 线性回归 | $\frac{1}{2}\|Xw-y\|^2$ | 无 | 正规方程、梯度下降 |
 | 逻辑回归 | 交叉熵 | 无 | 梯度下降、牛顿法 |
 | SVM | $\frac{1}{2}\|w\|^2$ | $y_i(w^T x_i+b) \geq 1$ | SMO、对偶方法 |
 | PCA | $w^T \Sigma w$ | $\|w\|=1$ | 特征分解 |
@@ -4012,368 +4215,13 @@ $$\nabla_w L = 2\Sigma w - 2\lambda w = 0 \Rightarrow \Sigma w = \lambda w$$
 
 ---
 
-### 7.2 L-光滑性与强凸性
-
-## 一、L-光滑性（L-Smoothness）
-
-**定义**：可微函数 $f$ 是 $L$-光滑的，如果其梯度是 $L$-Lipschitz 连续的：
-$$\|\nabla f(x) - \nabla f(y)\| \leq L\|x - y\|, \quad \forall x, y$$
-
-其中 $L > 0$ 称为光滑常数。
-
-**直观理解**：梯度的变化速度有上界。函数图像不会"太弯曲"。
-
----
-
-**等价条件**：
-
-对于 $L$-光滑函数，以下等价：
-
-1. **梯度 Lipschitz**：$\|\nabla f(x) - \nabla f(y)\| \leq L\|x - y\|$
-
-2. **二次上界**：
-   $$f(y) \leq f(x) + \nabla f(x)^T(y-x) + \frac{L}{2}\|y-x\|^2$$
-
-3. **海森矩阵有界**（二阶可微时）：
-   $$\nabla^2 f(x) \preceq LI$$
-
----
-
-**例题 1**：验证 $f(x) = \frac{L}{2}x^2$ 是 $L$-光滑的。
-
-**解**：
-
-梯度：$\nabla f(x) = Lx$
-
-验证 Lipschitz 条件：
-$$|\nabla f(x) - \nabla f(y)| = |Lx - Ly| = L|x - y|$$
-
-恰好满足 Lipschitz 条件，光滑常数为 $L$。
-
----
-
-**例题 2**：验证 $f(x) = \frac{1}{2}x^T Ax$ 是 $L$-光滑的，其中 $L = \lambda_{\max}(A)$（$A$ 的最大特征值）。
-
-**解**：
-
-梯度：$\nabla f(x) = Ax$
-
-$$\|\nabla f(x) - \nabla f(y)\| = \|Ax - Ay\| = \|A(x-y)\|$$
-
-由谱范数定义：
-$$\|A(x-y)\| \leq \|A\|_2 \|x-y\| = \lambda_{\max}(A)\|x-y\|$$
-
-故 $f$ 是 $L$-光滑的，$L = \lambda_{\max}(A)$。
-
----
-
-**几何解释**：
-
-```
-f(x)
- │          ___
- │        ╱   │   二次上界：f(y) ≤ 抛物线
- │       ╱    │
- │      ╱     │
- │     ╱      ● 函数图像
- │    ╱      ╱
- │   ●──────╱──  切线
- │          │
- └──────────┴────→ x
-
-L-光滑函数的图像始终在"切线 + 抛物线"下方
-```
-
----
-
-## 二、μ-强凸性（μ-Strong Convexity）
-
-**定义**：函数 $f$ 是 $\mu$-强凸的，如果：
-$$f(y) \geq f(x) + \nabla f(x)^T(y-x) + \frac{\mu}{2}\|y-x\|^2, \quad \forall x, y$$
-
-其中 $\mu > 0$。
-
-**直观理解**：函数"足够弯曲"，不是平坦的。
-
----
-
-**等价条件**：
-
-1. **定义式**：$f(y) \geq f(x) + \nabla f(x)^T(y-x) + \frac{\mu}{2}\|y-x\|^2$
-
-2. **梯度强单调**：
-   $$(\nabla f(x) - \nabla f(y))^T(x-y) \geq \mu\|x-y\|^2$$
-
-3. **海森矩阵下界**（二阶可微时）：
-   $$\nabla^2 f(x) \succeq \mu I$$
-
----
-
-**例题 3**：验证 $f(x) = \frac{\mu}{2}x^2$ 是 $\mu$-强凸的。
-
-**解**：
-
-二阶导数：$f''(x) = \mu$
-
-由二阶条件，$f''(x) \geq \mu$，故 $f$ 是 $\mu$-强凸的。
-
----
-
-## 三、L-光滑且 μ-强凸函数
-
-**定义**：函数 $f$ 同时是 $L$-光滑和 $\mu$-强凸的，如果：
-$$\mu I \preceq \nabla^2 f(x) \preceq LI$$
-
-即海森矩阵的特征值在 $[\mu, L]$ 范围内。
-
-**条件数**：$\kappa = \frac{L}{\mu}$ 称为条件数。
-
-- $\kappa$ 小：函数"形状好"，优化容易
-- $\kappa$ 大：函数"扁长"，优化困难
-
----
-
-**几何解释**：
-
-```
-等高线图：
-
-μ=L（条件数=1）：       μ<<L（条件数大）：
-
-      ●                    ___
-   ●     ●              ╱   │   ╲
-  ●   x*   ●           │    │    │
-   ●     ●              ╲___│___╱
-      ●
-
-圆形等高线              椭圆形等高线
-容易优化                难优化（梯度方向震荡）
-```
-
----
-
-## 四、在优化中的应用
-
-### 梯度下降收敛速率
-
-**定理**：如果 $f$ 是 $L$-光滑的凸函数，梯度下降使用步长 $\eta = \frac{1}{L}$，则：
-$$f(x_k) - f(x^*) \leq \frac{L\|x_0 - x^*\|^2}{2k}$$
-
-即收敛速率为 $O(1/k)$。
-
-**定理**：如果 $f$ 是 $L$-光滑且 $\mu$-强凸的，梯度下降使用步长 $\eta = \frac{1}{L}$，则：
-$$\|x_k - x^*\|^2 \leq \left(1 - \frac{\mu}{L}\right)^k \|x_0 - x^*\|^2$$
-
-即**线性收敛**（几何收敛）！
-
----
-
-**证明思路**（强凸情况）：
-
-由 $L$-光滑性：
-$$f(x_{k+1}) \leq f(x_k) + \nabla f(x_k)^T(x_{k+1} - x_k) + \frac{L}{2}\|x_{k+1} - x_k\|^2$$
-
-代入 $x_{k+1} = x_k - \eta\nabla f(x_k)$：
-$$f(x_{k+1}) \leq f(x_k) - \eta\|\nabla f(x_k)\|^2 + \frac{L\eta^2}{2}\|\nabla f(x_k)\|^2$$
-
-取 $\eta = \frac{1}{L}$：
-$$f(x_{k+1}) \leq f(x_k) - \frac{1}{2L}\|\nabla f(x_k)\|^2$$
-
-再结合强凸性可得线性收敛。
-
----
-
-### 收敛速率对比表
-
-| 函数类型 | 收敛速率 | 说明 |
-|----------|----------|------|
-| 一般凸 + L-光滑 | $O(1/k)$ | 次线性收敛 |
-| μ-强凸 + L-光滑 | $O((1-\mu/L)^k)$ | 线性收敛 |
-| 二阶方法（牛顿） | $O(c^{-k})$ | 二次收敛（更快） |
-
----
-
-### 7.3 典型优化问题模型 (#)
-
-## 一、线性规划（Linear Programming, LP）
-
-**标准形式**：
-$$\min_x c^T x \quad \text{s.t.} \quad Ax = b, \quad x \geq 0$$
-
-**特点**：
-- 目标函数是线性的
-- 约束是线性的
-- 可行域是凸多面体
-
----
-
-**例题 1**：生产计划问题
-
-某工厂生产两种产品，利润和资源消耗如下：
-
-| 产品 | 利润（万） | 工时 | 原料（吨） |
-|------|-----------|------|-----------|
-| A | 2 | 1 | 2 |
-| B | 3 | 2 | 1 |
-
-资源限制：工时 100，原料 80 吨。求最大利润。
-
-**建模**：
-
-设 $x_1$ = 产品 A 产量，$x_2$ = 产品 B 产量
-
-$$\max 2x_1 + 3x_2$$
-$$\text{s.t.} \begin{cases} x_1 + 2x_2 \leq 100 \quad \text{（工时）} \\ 2x_1 + x_2 \leq 80 \quad \text{（原料）} \\ x_1, x_2 \geq 0 \end{cases}$$
-
-**图解法**：
-
-```
-x₂
- │
- │  x₁ + 2x₂ = 100
-50├──●────────
- │  │＼      │
- │  │  ＼    │
-40├──┼────●──┤ 2x₁ + x₂ = 80
- │  │    │＼ │
- │  │  可行域│＼
- 0 └──┴────┴──┴──→ x₁
-     0   40  50 100
-
-最优解在顶点处，可通过单纯形法求解
-```
-
----
-
-## 二、逻辑回归（Logistic Regression）
-
-**问题**：二分类问题，标签 $y_i \in \{0, 1\}$
-
-**模型**：
-$$P(y=1|x; w) = \sigma(w^T x) = \frac{1}{1 + e^{-w^T x}}$$
-
-**优化问题**（极大似然估计）：
-$$\min_w -\sum_{i=1}^{n} [y_i \log \sigma(w^T x_i) + (1-y_i)\log(1-\sigma(w^T x_i))]$$
-
-**性质**：
-- 目标函数是凸的（可以验证海森矩阵半正定）
-- 没有闭式解，需用迭代方法（梯度下降、牛顿法）
-
----
-
-**梯度推导**：
-
-令 $\hat{y}_i = \sigma(w^T x_i)$
-
-损失函数对 $w$ 的梯度：
-$$\nabla_w \mathcal{L}(w) = \sum_{i=1}^{n} (\hat{y}_i - y_i)x_i$$
-
-**直观理解**：
-- $\hat{y}_i - y_i$ 是预测误差
-- 梯度是误差的加权和
-
----
-
-## 三、支持向量机（Support Vector Machine, SVM）
-
-**问题**：二分类，寻找最大间隔超平面
-
-**原始问题**：
-$$\min_{w, b} \frac{1}{2}\|w\|^2 \quad \text{s.t.} \quad y_i(w^T x_i + b) \geq 1, \quad \forall i$$
-
-**带软间隔**（允许一些样本在间隔内）：
-$$\min_{w, b, \xi} \frac{1}{2}\|w\|^2 + C\sum_{i=1}^{n} \xi_i$$
-$$\text{s.t.} \quad y_i(w^T x_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0$$
-
----
-
-**对偶问题**（更常用）：
-
-$$\max_{\alpha} \sum_{i=1}^{n} \alpha_i - \frac{1}{2}\sum_{i,j} \alpha_i \alpha_j y_i y_j x_i^T x_j$$
-$$\text{s.t.} \quad \sum_{i=1}^{n} \alpha_i y_i = 0, \quad 0 \leq \alpha_i \leq C$$
-
-**核技巧**：将 $x_i^T x_j$ 替换为核函数 $K(x_i, x_j)$，可以处理非线性分类。
-
----
-
-**几何解释**：
-
-```
-      ● 支持向量
-     ╱│╲
-    ╱ │ ╲  间隔边界
-   ╱  │  ╲
-  ●───┼───●  最优超平面 wᵀx+b=0
- ╱│   │   │╲
-╱ │   │   │ ╲
-●  │   │   │  ●
-   │       │
-   ← 间隔 = 2/‖w‖ →
-
-最大化间隔 = 最小化 ‖w‖
-```
-
----
-
-## 四、主成分分析（Principal Component Analysis, PCA）
-
-**问题**：寻找数据的"主方向"（方差最大的方向）
-
-**形式 1（方差最大化）**：
-$$\max_{w: \|w\|=1} w^T \Sigma w$$
-
-其中 $\Sigma = \frac{1}{n}\sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^T$ 是协方差矩阵。
-
-**解**：$\Sigma$ 的最大特征值对应的单位特征向量。
-
----
-
-**形式 2（重构误差最小化）**：
-$$\min_{U: U^T U = I} \sum_{i=1}^{n} \|x_i - UU^T x_i\|^2$$
-
-其中 $U \in \mathbb{R}^{d \times k}$ 是投影矩阵。
-
-**解**：$U$ 的列是 $\Sigma$ 的前 $k$ 个特征向量。
-
----
-
-**推导（形式 1）**：
-
-目标：$\max_{w: \|w\|=1} w^T \Sigma w$
-
-拉格朗日函数：$L(w, \lambda) = w^T \Sigma w - \lambda(w^T w - 1)$
-
-KKT 条件：
-$$\nabla_w L = 2\Sigma w - 2\lambda w = 0 \Rightarrow \Sigma w = \lambda w$$
-
-故 $w$ 是 $\Sigma$ 的特征向量，$\lambda$ 是特征值。
-
-目标函数值：$w^T \Sigma w = w^T (\lambda w) = \lambda$
-
-要最大化，选择最大特征值对应的特征向量。
-
----
-
-## 五、典型优化问题对比
-
-| 问题 | 目标函数 | 约束 | 解法 |
-|------|----------|------|------|
-| 线性规划 | $c^T x$ | $Ax \leq b$ | 单纯形法、内点法 |
-| 逻辑回归 | 交叉熵 | 无 | 梯度下降、牛顿法 |
-| SVM | $\frac{1}{2}\|w\|^2$ | $y_i(w^T x_i+b) \geq 1$ | SMO、对偶方法 |
-| PCA | $w^T \Sigma w$ | $\|w\|=1$ | 特征分解 |
-| 岭回归 | $\|Xw-y\|^2 + \lambda\|w\|^2$ | 无 | 闭式解：$(X^T X+\lambda I)^{-1}X^T y$ |
-| LASSO | $\|Xw-y\|^2 + \lambda\|w\|_1$ | 无 | 坐标下降、近端梯度 |
-
----
-
-## 第 8 章 最优性理论
+## 第 7 章 最优性理论
 
 最优性理论研究的是：一个点成为最优解（最小值点）需要满足什么条件。
 
-### 8.1 无约束可微问题的最优性理论 (#)
+### 7.1 无约束可微问题的最优性理论 (#)
 
-## 一、一阶必要条件
+#### 一、一阶必要条件
 
 **定理**：如果 $x^*$ 是 $f$ 的局部最小值点，且 $f$ 在 $x^*$ 处可微，则：
 $$\nabla f(x^*) = 0$$
@@ -4397,7 +4245,7 @@ $$3x^2 - 3 = 0 \Rightarrow x^2 = 1 \Rightarrow x = \pm 1$$
 
 ---
 
-## 二、二阶必要条件
+#### 二、二阶必要条件
 
 **定理**：如果 $x^*$ 是 $f$ 的局部最小值点，且 $f$ 在 $x^*$ 处二阶可微，则：
 $$\nabla f(x^*) = 0 \quad \text{且} \quad \nabla^2 f(x^*) \succeq 0$$
@@ -4408,7 +4256,7 @@ $$\nabla f(x^*) = 0 \quad \text{且} \quad \nabla^2 f(x^*) \succeq 0$$
 
 ---
 
-## 三、二阶充分条件
+#### 三、二阶充分条件
 
 **定理**：如果 $f$ 在 $x^*$ 处二阶可微，且：
 $$\nabla f(x^*) = 0 \quad \text{且} \quad \nabla^2 f(x^*) \succ 0$$
@@ -4452,7 +4300,7 @@ f(x)
 
 ---
 
-## 四、凸问题的充要条件
+#### 四、凸问题的充要条件
 
 **定理**：如果 $f$ 是凸函数且可微，则：
 $$x^* \text{是全局最小值点} \iff \nabla f(x^*) = 0$$
@@ -4485,9 +4333,9 @@ $f$ 是二次函数，海森矩阵 $f''(x) = 2 > 0$，故为凸函数。
 
 ---
 
-### 8.2 拉格朗日函数与对偶问题
+### 7.2 拉格朗日函数与对偶问题
 
-## 一、等式约束问题
+#### 一、等式约束问题
 
 **问题**：
 $$\min_x f(x) \quad \text{s.t.} \quad h_i(x) = 0, \quad i = 1, \dots, m$$
@@ -4496,6 +4344,8 @@ $$\min_x f(x) \quad \text{s.t.} \quad h_i(x) = 0, \quad i = 1, \dots, m$$
 $$L(x, \lambda) = f(x) + \sum_{i=1}^{m} \lambda_i h_i(x)$$
 
 其中 $\lambda = (\lambda_1, \dots, \lambda_m)$ 是拉格朗日乘子。
+
+这一步的作用是把“带约束的问题”改写成一个包含乘子的函数。$\lambda_i$ 可以理解为约束 $h_i(x)=0$ 对最优解的影响强度；在最优点处，目标函数的梯度必须和约束梯度达到平衡。
 
 ---
 
@@ -4545,7 +4395,7 @@ y
 
 ---
 
-## 二、不等式约束问题
+#### 二、不等式约束问题
 
 **问题**：
 $$\min_x f(x) \quad \text{s.t.} \quad g_j(x) \leq 0, \quad j = 1, \dots, p$$
@@ -4554,6 +4404,8 @@ $$\min_x f(x) \quad \text{s.t.} \quad g_j(x) \leq 0, \quad j = 1, \dots, p$$
 $$L(x, \mu) = f(x) + \sum_{j=1}^{p} \mu_j g_j(x)$$
 
 其中 $\mu_j \geq 0$ 是拉格朗日乘子。
+
+不等式约束写成 $g_j(x)\leq 0$ 后，乘子要求 $\mu_j\geq 0$。直观上，只有被“顶住”的约束才会产生正的乘子；如果某个约束还有余量，它对当前最优解没有实际作用。
 
 ---
 
@@ -4577,10 +4429,12 @@ $$L(x, \mu) = f(x) + \sum_{j=1}^{p} \mu_j g_j(x)$$
 
 ---
 
-## 三、对偶函数与对偶问题
+#### 三、对偶函数与对偶问题
 
 **对偶函数**：
 $$d(\mu) = \inf_x L(x, \mu) = \inf_x \left[f(x) + \sum_{j=1}^{p} \mu_j g_j(x)\right]$$
+
+读法：先固定乘子 $\mu$，再对原变量 $x$ 把拉格朗日函数最小化。这样得到的 $d(\mu)$ 是原问题最优值的一个下界。
 
 **性质**：对偶函数 $d(\mu)$ 总是凹函数（即使原问题不是凸的）。
 
@@ -4588,6 +4442,8 @@ $$d(\mu) = \inf_x L(x, \mu) = \inf_x \left[f(x) + \sum_{j=1}^{p} \mu_j g_j(x)\ri
 
 **对偶问题**：
 $$\max_{\mu \geq 0} d(\mu)$$
+
+读法：对偶问题是在所有合法乘子 $\mu$ 中，寻找最大的下界。弱对偶说这个下界永远不会超过原问题最优值；强对偶说在条件好的凸问题里，这个下界可以刚好顶到原问题最优值。
 
 **弱对偶**：$d^* \leq p^*$（对偶最优值 ≤ 原问题最优值）
 
@@ -4623,15 +4479,17 @@ $$\max_{\mu \geq 0} \mu - \frac{\mu^2}{4}$$
 
 ---
 
-### 8.3 约束优化问题的最优性理论
+### 7.3 约束优化问题的最优性理论
 
-## KKT 条件（一般约束问题）
+#### KKT 条件（一般约束问题）
 
 **问题**：
 $$\min_x f(x) \quad \text{s.t.} \quad h_i(x) = 0 \ (i=1,\dots,m), \quad g_j(x) \leq 0 \ (j=1,\dots,p)$$
 
 **拉格朗日函数**：
 $$L(x, \lambda, \mu) = f(x) + \sum_{i=1}^{m} \lambda_i h_i(x) + \sum_{j=1}^{p} \mu_j g_j(x)$$
+
+它把目标函数、等式约束和不等式约束统一放进一个函数里。KKT 条件就是在这个拉格朗日函数上写出“最优点应该满足什么平衡关系”。
 
 ---
 
@@ -4645,6 +4503,8 @@ $$L(x, \lambda, \mu) = f(x) + \sum_{i=1}^{m} \lambda_i h_i(x) + \sum_{j=1}^{p} \
 | 平稳性 | $\nabla f(x^*) + \sum_i \lambda_i^* \nabla h_i(x^*) + \sum_j \mu_j^* \nabla g_j(x^*) = 0$ |
 
 ---
+
+读法：KKT 条件可以理解成四件事同时成立：解本身满足原约束；不等式乘子非负；没卡住的约束乘子为 0；目标函数梯度和约束梯度在最优点处互相抵消。
 
 **定理**：
 - **必要性**：如果 $x^*$ 是局部最优解，且满足某些正则性条件（约束规范），则存在 KKT 乘子。
@@ -4694,7 +4554,7 @@ $$\frac{\mu}{2} + \frac{\mu}{2} = 1 \Rightarrow \mu = 1$$
 
 ---
 
-## KKT 条件的几何解释
+#### KKT 条件的几何解释
 
 ```
 可行域边界 g(x)=0
@@ -4721,88 +4581,11 @@ $$\frac{\mu}{2} + \frac{\mu}{2} = 1 \Rightarrow \mu = 1$$
 
 ---
 
-### 8.2 拉格朗日函数与对偶问题
+## 第 8 章 优化算法
 
-**等式约束问题**：
-$$\min_x f(x) \quad \text{s.t.} \quad h_i(x) = 0, i = 1, \dots, m$$
+### 8.1 梯度下降法 (#)
 
-**拉格朗日函数**：
-$$L(x, \lambda) = f(x) + \sum_{i=1}^{m} \lambda_i h_i(x)$$
-
-**KKT 条件**（等式约束）：
-$$\nabla_x L(x^*, \lambda^*) = 0, \quad h_i(x^*) = 0$$
-
-**例题**：$\min x^2 + y^2$ s.t. $x + y = 1$
-
-拉格朗日函数：$L(x, y, \lambda) = x^2 + y^2 + \lambda(x + y - 1)$
-
-KKT 条件：
-$$\frac{\partial L}{\partial x} = 2x + \lambda = 0$$
-$$\frac{\partial L}{\partial y} = 2y + \lambda = 0$$
-$$x + y = 1$$
-
-解得：$x = y = \frac{1}{2}$，$\lambda = -1$
-
-最优值：$f\left(\frac{1}{2}, \frac{1}{2}\right) = \frac{1}{4} + \frac{1}{4} = \frac{1}{2}$
-
----
-
-**不等式约束问题**：
-$$\min_x f(x) \quad \text{s.t.} \quad g_j(x) \leq 0, j = 1, \dots, p$$
-
-**拉格朗日函数**：
-$$L(x, \lambda, \mu) = f(x) + \sum_{i=1}^{m} \lambda_i h_i(x) + \sum_{j=1}^{p} \mu_j g_j(x)$$
-
-**对偶函数**：
-$$d(\lambda, \mu) = \inf_x L(x, \lambda, \mu)$$
-
-**对偶问题**：
-$$\max_{\lambda, \mu \geq 0} d(\lambda, \mu)$$
-
-**弱对偶**：$d^* \leq p^*$（对偶最优值 ≤ 原问题最优值）
-
-**强对偶**：$d^* = p^*$（凸问题通常满足）
-
----
-
-### 8.3 约束优化问题的最优性理论
-
-**KKT 条件**（一般约束问题）：
-
-| 条件 | 公式 |
-|------|------|
-| 原始可行 | $h_i(x^*) = 0, \quad g_j(x^*) \leq 0$ |
-| 对偶可行 | $\mu_j^* \geq 0$ |
-| 互补松弛 | $\mu_j^* g_j(x^*) = 0$ |
-| 平稳性 | $\nabla f(x^*) + \sum_i \lambda_i^* \nabla h_i(x^*) + \sum_j \mu_j^* \nabla g_j(x^*) = 0$ |
-
-**例题**：$\min x^2 + y^2$ s.t. $x + y \geq 1$（即 $1 - x - y \leq 0$）
-
-拉格朗日函数：$L(x, y, \mu) = x^2 + y^2 + \mu(1 - x - y)$
-
-KKT 条件：
-1. 原始可行：$1 - x - y \leq 0$
-2. 对偶可行：$\mu \geq 0$
-3. 互补松弛：$\mu(1 - x - y) = 0$
-4. 平稳性：$2x - \mu = 0$，$2y - \mu = 0$
-
-由平稳性：$x = y = \mu/2$
-
-若 $\mu = 0$，则 $x = y = 0$，但 $1 - 0 - 0 = 1 \not\leq 0$，不可行。
-
-故 $\mu > 0$，由互补松弛：$1 - x - y = 0$，即 $x + y = 1$。
-
-解得：$x = y = \frac{1}{2}$，$\mu = 1$
-
-**意义**：对凸问题，KKT 条件是充分必要条件。
-
----
-
-## 第 9 章 优化算法
-
-### 9.1 梯度下降法 (#)
-
-## 一、梯度下降法的核心思想
+#### 一、梯度下降法的核心思想
 
 **基本思想**：沿负梯度方向移动，函数值下降最快。
 
@@ -4832,7 +4615,7 @@ f(x)
 
 ---
 
-## 二、学习率的选择
+#### 二、学习率的选择
 
 **学习率的影响**：
 
@@ -4870,7 +4653,7 @@ f(x)
 
 ---
 
-## 三、收敛性定理
+#### 三、收敛性定理
 
 **定理 1**（凸函数 + L-光滑）：
 
@@ -4886,7 +4669,7 @@ $$\|x_k - x^*\|^2 \leq \left(1 - \frac{\mu}{L}\right)^k \|x_0 - x^*\|^2$$
 
 ---
 
-## 四、梯度下降的变体
+#### 四、梯度下降的变体
 
 | 变体 | 梯度计算 | 优点 | 缺点 |
 |------|----------|------|------|
@@ -4896,9 +4679,9 @@ $$\|x_k - x^*\|^2 \leq \left(1 - \frac{\mu}{L}\right)^k \|x_0 - x^*\|^2$$
 
 ---
 
-### 9.2 面向神经网络的前反向传播算法 (#)
+### 8.2 面向神经网络的前反向传播算法 (#)
 
-## 一、神经网络结构
+#### 一、神经网络结构
 
 考虑一个简单的两层神经网络：
 
@@ -4915,7 +4698,7 @@ $$\|x_k - x^*\|^2 \leq \left(1 - \frac{\mu}{L}\right)^k \|x_0 - x^*\|^2$$
 
 ---
 
-## 二、前向传播（Forward Propagation）
+#### 二、前向传播（Forward Propagation）
 
 **Step 1**：计算隐藏层的线性部分
 $$z^{[1]} = W^{[1]}x + b^{[1]}$$
@@ -4936,7 +4719,7 @@ $$\mathcal{L}(\hat{y}, y) = -[y \ln \hat{y} + (1-y)\ln(1-\hat{y})]$$
 
 ---
 
-## 三、反向传播（Backward Propagation）
+#### 三、反向传播（Backward Propagation）
 
 反向传播的核心是**链式法则**！
 
@@ -4967,7 +4750,7 @@ $$\frac{\partial \mathcal{L}}{\partial W^{[1]}} = \delta^{[1]}x^T, \quad \frac{\
 
 ---
 
-## 四、完整数值例子
+#### 四、完整数值例子
 
 **设置**：
 - $x = \begin{pmatrix} 1 \\ 2 \end{pmatrix}$，$y = 1$
@@ -5004,9 +4787,9 @@ $$\frac{\partial \mathcal{L}}{\partial W^{[1]}} = \delta^{[1]}x^T, \quad \frac{\
 
 ---
 
-### 9.3 随机梯度下降法 (SGD) (#)
+### 8.3 随机梯度下降法 (SGD) (#)
 
-## 一、SGD 的核心思想
+#### 一、SGD 的核心思想
 
 **问题**：批量梯度下降每次迭代需要计算所有样本的梯度，当 $n$ 很大时非常慢。
 
@@ -5025,7 +4808,7 @@ $$w_{k+1} = w_k - \eta \nabla f_i(w_k)$$
 
 ---
 
-## 二、SGD 与 BGD 的对比
+#### 二、SGD 与 BGD 的对比
 
 | 特性 | BGD | SGD |
 |------|-----|-----|
@@ -5046,7 +4829,7 @@ $$E[\nabla f_i(w)] = \frac{1}{n}\sum_{i=1}^n \nabla f_i(w) = \nabla f(w)$$
 
 ---
 
-## 三、Mini-batch SGD
+#### 三、Mini-batch SGD
 
 **折中方案**：每次使用一小批样本（batch size 通常为 32, 64, 128, ...）
 
@@ -5072,9 +4855,9 @@ $$w_{k+1} = w_k - \eta \frac{1}{|B|}\sum_{i \in B} \nabla f_i(w_k)$$
 
 ---
 
-### 9.4 动量法
+### 8.4 动量法
 
-## 一、Polyak 动量
+#### 一、Polyak 动量
 
 **思想**：模拟物理中的动量概念，累积之前的更新方向。
 
@@ -5114,7 +4897,7 @@ $$x_{k+1} = x_k - v_{k+1}$$
 
 ---
 
-## 二、Nesterov 动量
+#### 二、Nesterov 动量
 
 **思想**：提前查看"前方"的梯度，更准确地更新。
 
@@ -5139,9 +4922,9 @@ $$x_{k+1} = x_k - v_{k+1}$$
 
 ---
 
-### 9.5 自适应梯度算法
+### 8.5 自适应梯度算法
 
-## 一、AdaGrad（Adaptive Gradient）
+#### 一、AdaGrad（Adaptive Gradient）
 
 **思想**：为每个参数自适应调整学习率。
 
@@ -5178,7 +4961,7 @@ $$x_{k+1} = x_k - \frac{\eta}{\sqrt{G_k + \epsilon}} \odot \nabla f(x_k)$$
 
 ---
 
-## 二、RMSProp（Root Mean Square Propagation）
+#### 二、RMSProp（Root Mean Square Propagation）
 
 **思想**：使用指数加权平均，避免学习率过快衰减。
 
@@ -5200,7 +4983,7 @@ $$x_{k+1} = x_k - \frac{\eta}{\sqrt{E[g^2]_k + \epsilon}} \odot \nabla f(x_k)$$
 
 ---
 
-## 三、Adam（Adaptive Moment Estimation）
+#### 三、Adam（Adaptive Moment Estimation）
 
 **思想**：结合动量法和 RMSProp 的优点。
 
@@ -5241,7 +5024,7 @@ $$x_{k+1} = x_k - \frac{\eta}{\sqrt{E[g^2]_k + \epsilon}} \odot \nabla f(x_k)$$
 
 ---
 
-## 四、优化算法对比总结
+#### 四、优化算法对比总结
 
 | 算法 | 优点 | 缺点 | 适用场景 |
 |------|------|------|----------|
@@ -5253,7 +5036,7 @@ $$x_{k+1} = x_k - \frac{\eta}{\sqrt{E[g^2]_k + \epsilon}} \odot \nabla f(x_k)$$
 
 ---
 
-### 9.6 增广拉格朗日算法
+### 8.6 增广拉格朗日算法
 
 **问题**：
 $$\min_x f(x) \quad \text{s.t.} \quad h(x) = 0$$
@@ -5300,14 +5083,16 @@ $$\lambda_{k+1} = \lambda_k + \rho h(x_{k+1})$$
 
 > 新版考纲第 9 章的官方重点只有五项：`循环神经网络`、`自注意力机制`、`Transformer 模型`、`Decoder-only 大模型参数量 / 计算量 / 内存量`、`LoRA`。本节前面的 `Softmax / 交叉熵 / ERM` 作为配套背景保留，不单独视为新版条目。
 
-## 新版第 9 章 Transformer 与注意力机制
+## 第 9 章 Transformer 与注意力机制
 
 ### 附：Softmax 与多分类交叉熵（背景）
 
-## 一、Softmax 函数
+#### 一、Softmax 函数
 
 **定义**：将向量 $z \in \mathbb{R}^K$ 映射为概率分布：
 $$\text{softmax}(z)_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}, \quad i = 1, \dots, K$$
+
+读法：第 $i$ 类的分数 $z_i$ 先取指数变成正数，再除以所有类别指数分数之和，因此输出可以当成各类别的概率。
 
 **性质**：
 1. 输出非负：$\text{softmax}(z)_i > 0$
@@ -5343,7 +5128,7 @@ $$\text{softmax}(z) = \begin{pmatrix} \frac{e^0}{e^0 + e^{-1} + e^{-2}} \\ \frac
 
 ---
 
-## 二、多分类交叉熵损失
+#### 二、多分类交叉熵损失
 
 **定义**：
 $$\mathcal{L}(\hat{y}, y) = -\sum_{i=1}^{K} y_i \log \hat{y}_i$$
@@ -5351,6 +5136,8 @@ $$\mathcal{L}(\hat{y}, y) = -\sum_{i=1}^{K} y_i \log \hat{y}_i$$
 其中：
 - $y$ 是 one-hot 标签向量（只有一个元素为 1，其余为 0）
 - $\hat{y} = \text{softmax}(z)$ 是预测概率分布
+
+读法：真实类别对应的预测概率越大，负对数越小，损失越小；如果真实类别的预测概率接近 0，损失会非常大。
 
 ---
 
@@ -5383,7 +5170,7 @@ $$\mathcal{L} = -[1 \times \ln(0.665) + 0 \times \ln(0.245) + 0 \times \ln(0.090
 
 ### 附：经验风险最小化（背景）
 
-## 经验风险最小化（Empirical Risk Minimization, ERM）
+#### 经验风险最小化（Empirical Risk Minimization, ERM）
 
 **核心思想**：在训练集上最小化平均损失。
 
@@ -5396,13 +5183,15 @@ $$\min_{\theta} \frac{1}{n}\sum_{i=1}^{n} \mathcal{L}(f(x_i; \theta), y_i)$$
 - $\mathcal{L}$：损失函数
 - $n$：训练样本数
 
+读法：遍历训练集中的每个样本，计算预测值和真实标签之间的损失，再取平均；训练模型就是调整 $\theta$，让这个平均损失尽量小。
+
 ---
 
 **带正则化的 ERM**：
 
 $$\min_{\theta} \frac{1}{n}\sum_{i=1}^{n} \mathcal{L}(f(x_i; \theta), y_i) + \lambda R(\theta)$$
 
-**正则化项的作用**：防止过拟合，鼓励简单模型。
+**正则化项的作用**：前半部分要求模型拟合训练数据，后半部分 $\lambda R(\theta)$ 惩罚过于复杂的参数。$\lambda$ 越大，越强调简单模型；$\lambda$ 越小，越强调训练集拟合。
 
 | 正则化 | 公式 | 效果 |
 |--------|------|------|
@@ -5412,9 +5201,9 @@ $$\min_{\theta} \frac{1}{n}\sum_{i=1}^{n} \mathcal{L}(f(x_i; \theta), y_i) + \la
 
 ---
 
-### 新版 9.1 循环神经网络与序列建模
+### 9.1 循环神经网络与序列建模
 
-## 一、循环神经网络（RNN）
+#### 一、循环神经网络（RNN）
 
 **核心递推公式**：
 $$h_t = \phi(W_{xh}x_t + W_{hh}h_{t-1} + b_h), \quad y_t = W_{hy}h_t + b_y$$
@@ -5423,6 +5212,8 @@ $$h_t = \phi(W_{xh}x_t + W_{hh}h_{t-1} + b_h), \quad y_t = W_{hy}h_t + b_y$$
 - $x_t$：第 $t$ 个时刻输入
 - $h_t$：隐藏状态，汇总到当前时刻为止的历史信息
 - $\phi(\cdot)$：非线性激活函数（如 `tanh` 或 `ReLU`）
+
+读法：当前隐藏状态 $h_t$ 同时看当前输入 $x_t$ 和上一个隐藏状态 $h_{t-1}$。所以 RNN 不是每个位置独立计算，而是把历史信息一步步传下去。
 
 **RNN 的考点抓手**：
 1. 会写出递推关系，说明"当前状态依赖当前输入和上一时刻隐藏状态"。
@@ -5438,12 +5229,14 @@ $$h_t = \phi(W_{xh}x_t + W_{hh}h_{t-1} + b_h), \quad y_t = W_{hy}h_t + b_y$$
 
 ---
 
-## 二、语言模型的目标
+#### 二、语言模型的目标
 
 **目标**：建模序列的概率分布
 $$P(w_1, w_2, \dots, w_T) = \prod_{t=1}^{T} P(w_t | w_1, \dots, w_{t-1})$$
 
 **链式法则**：任何序列都可以分解为条件概率的乘积。
+
+读法：一句话的整体概率，可以拆成“第 1 个词的概率 × 在前面词已知时第 2 个词的概率 × ……”。语言模型真正学习的是每一步的下一个词概率。
 
 ---
 
@@ -5455,7 +5248,7 @@ $$P(\text{"I love NLP"}) = P(\text{"I"}) \times P(\text{"love"}|\text{"I"}) \tim
 
 ---
 
-## 三、自回归模型（Autoregressive Model）
+#### 三、自回归模型（Autoregressive Model）
 
 **核心思想**：用前面的词预测下一个词。
 
@@ -5465,6 +5258,8 @@ $$P(w_t | w_{<t}) = \text{softmax}(W h_t + b)$$
 - $h_t$ 是时刻 $t$ 的隐藏状态
 - $W$ 是权重矩阵
 - 输出维度等于词表大小
+
+读法：模型把当前隐藏状态 $h_t$ 变成词表上每个词的分数，再用 softmax 变成概率分布，最后选概率高的词作为下一个词的候选。
 
 ---
 
@@ -5481,9 +5276,9 @@ $$P(w_t | w_{t-1}, \dots, w_{t-N+1})$$
 
 ---
 
-### 新版 9.2 自注意力机制
+### 9.2 自注意力机制
 
-## 一、注意力机制的核心思想
+#### 一、注意力机制的核心思想
 
 **直观理解**：给定一个查询（Query），在一组键值对（Key-Value）中检索相关信息。
 
@@ -5494,7 +5289,7 @@ $$P(w_t | w_{t-1}, \dots, w_{t-N+1})$$
 
 ---
 
-## 二、Scaled Dot-Product Attention
+#### 二、Scaled Dot-Product Attention
 
 **公式**：
 $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
@@ -5504,6 +5299,8 @@ $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)
 - $K \in \mathbb{R}^{m \times d_k}$：键矩阵
 - $V \in \mathbb{R}^{m \times d_v}$：值矩阵
 - $\sqrt{d_k}$：缩放因子
+
+读法：先用 $QK^T$ 计算“每个 Query 和每个 Key 有多相关”，再用 softmax 把相关性变成权重，最后用这些权重对 $V$ 做加权平均。输出的每一行都是根据注意力权重混合出来的新表示。
 
 ---
 
@@ -5518,7 +5315,7 @@ $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)
 
 ---
 
-## 三、详细计算例子
+#### 三、详细计算例子
 
 **设置**：
 - $Q = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \in \mathbb{R}^{2 \times 2}$（2 个查询）
@@ -5568,7 +5365,7 @@ $$= \begin{pmatrix} 0.67 + 0.99 & 1.34 + 1.32 \\ 0.33 + 2.01 & 0.66 + 2.68 \end{
 
 ---
 
-## 四、自注意力（Self-Attention）
+#### 四、自注意力（Self-Attention）
 
 **自注意力**：$Q, K, V$ 都来自同一个输入序列。
 
@@ -5618,9 +5415,9 @@ $$O = PV = \begin{pmatrix}
 
 ---
 
-### 新版 9.3 Transformer 模型
+### 9.3 Transformer 模型
 
-## 一、多头注意力（Multi-Head Attention）
+#### 一、多头注意力（Multi-Head Attention）
 
 **思想**：多个注意力头并行工作，捕获不同的特征。
 
@@ -5632,6 +5429,8 @@ $$\text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)$$
 - $h$：头的数量（如 8 或 16）
 - $W_i^Q \in \mathbb{R}^{d \times d_k}$，$W_i^K \in \mathbb{R}^{d \times d_k}$，$W_i^V \in \mathbb{R}^{d \times d_v}$
 - $W^O \in \mathbb{R}^{h d_v \times d}$：输出投影矩阵
+
+读法：每个头先把输入投影到一套自己的 $Q,K,V$ 空间里，单独做一次注意力；多个头的结果拼接后，再乘 $W^O$ 融合回模型维度。
 
 ---
 
@@ -5645,7 +5444,7 @@ $$\text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)$$
 
 ---
 
-## 二、位置编码（Positional Encoding）
+#### 二、位置编码（Positional Encoding）
 
 **问题**：Transformer 没有递归和卷积，无法捕捉序列顺序。
 
@@ -5691,7 +5490,7 @@ $$PE_1 \approx [0.84, 0.54, 0.01, 1.0]$$
 
 ---
 
-## 三、Encoder 层结构
+#### 三、Encoder 层结构
 
 **Encoder 层**包含：
 
@@ -5740,9 +5539,9 @@ $$PE_1 \approx [0.84, 0.54, 0.01, 1.0]$$
 
 ---
 
-### 新版 9.4 Decoder-only 大模型参数量、计算量、内存量的计算与分析
+### 9.4 Decoder-only 大模型参数量、计算量、内存量的计算与分析
 
-## 一、参数量计算
+#### 一、参数量计算
 
 **Decoder-only Transformer 的参数组成**：
 
@@ -5782,7 +5581,7 @@ $$P \approx V \times d + L \times (4d^2 + 8d^2) = V \times d + 12Ld^2$$
 
 ---
 
-## 二、FLOPs 计算
+#### 二、FLOPs 计算
 
 **矩阵乘法 FLOPs**：
 $$A \in \mathbb{R}^{m \times n}, B \in \mathbb{R}^{n \times p} \Rightarrow AB \text{需要} 2mnp \text{次 FLOPs}$$
@@ -5819,7 +5618,7 @@ $$\text{时间} \approx \frac{2.23 \times 10^{20}}{10^{14}} \approx 2.23 \times 
 
 ---
 
-## 三、显存需求
+#### 三、显存需求
 
 **训练时显存组成**：
 
@@ -5861,9 +5660,9 @@ $$\text{Memory} \approx 2P \text{ bytes（FP16）或} 4P \text{ bytes（FP32）}
 
 ---
 
-### 新版 9.5 低秩微调方法 (LoRA)
+### 9.5 低秩微调方法 (LoRA)
 
-## 一、核心思想
+#### 一、核心思想
 
 **问题**：大模型参数量巨大，全量微调成本高。
 
@@ -5901,7 +5700,7 @@ $$h = Wx = (W_0 + \alpha BA)x = W_0 x + \alpha BAx$$
 
 ---
 
-## 二、具体数值例子
+#### 二、具体数值例子
 
 **设置**：
 - $W_0 \in \mathbb{R}^{4 \times 4}$，$r = 2$
@@ -5941,7 +5740,7 @@ $$W = W_0 + \Delta W = \begin{pmatrix} 1.1 & 2.2 & 3.3 & 4.4 \\ 5.5 & 6.6 & 7.7 
 
 ---
 
-## 三、参数量对比
+#### 三、参数量对比
 
 | 微调方法 | 参数量 | 例子（$d=4096, r=8$） |
 |----------|--------|----------------------|
@@ -5951,7 +5750,7 @@ $$W = W_0 + \Delta W = \begin{pmatrix} 1.1 & 2.2 & 3.3 & 4.4 \\ 5.5 & 6.6 & 7.7 
 
 ---
 
-## 四、样题对应：LoRA 两层网络的前反向传播
+#### 四、样题对应：LoRA 两层网络的前反向传播
 
 设
 $$h = (W_1 + A_1B_1)x, \quad z = \sigma(h), \quad y = (W_2 + A_2B_2)z, \quad L = f(y)$$
@@ -5978,7 +5777,7 @@ $$\frac{\partial L}{\partial B_1} = (A_1^T g_h) x^T$$
 
 ---
 
-## 五、LoRA 的优势
+#### 五、LoRA 的优势
 
 1. **参数高效**：只训练 0.1%~1% 的参数
 
@@ -5992,7 +5791,7 @@ $$\frac{\partial L}{\partial B_1} = (A_1^T g_h) x^T$$
 
 ---
 
-## 六、LoRA 应用到 Transformer
+#### 六、LoRA 应用到 Transformer
 
 **通常应用位置**：
 - 注意力层的 $W_Q, W_K, W_V, W_O$
