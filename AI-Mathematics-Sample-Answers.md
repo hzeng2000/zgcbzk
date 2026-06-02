@@ -1006,6 +1006,71 @@ $$
 =A_1^T\delta_h x^T}
 $$
 
+#### 方法二：直接用链式法则（不引入 $\delta$ 符号）
+
+上面的方法先定义了中间梯度 $\delta_y,\delta_z,\delta_h$，再用它们表示各参数的梯度。下面给出一种**不定义 $\delta$，直接对计算图逐步使用链式法则**的写法，本质相同但更贴近"链式法则逐步展开"的思路。
+
+**第二层参数 $A_2,B_2$ 的梯度**
+
+由 $y=(W_2+A_2B_2)z$，记 $p=\frac{\partial L}{\partial y}=\nabla f(y)$。
+
+对 $A_2$，因为 $y$ 对 $A_2$ 的依赖是 $y=\cdots+A_2(B_2z)$，将 $B_2z$ 视为常数向量，则：
+
+$$
+\frac{\partial L}{\partial A_2}
+=p\,(B_2z)^T
+$$
+
+对 $B_2$，因为 $y=\cdots+A_2B_2z$，将 $A_2$ 和 $z$ 固定，$B_2$ 通过 $A_2B_2$ 起作用。由链式法则，先对中间量 $u=A_2^Tp$（标量对矩阵求导的"内侧"梯度），再对 $B_2$：
+
+$$
+\frac{\partial L}{\partial B_2}
+=A_2^T\,p\,z^T
+$$
+
+**第一层参数 $A_1,B_1$ 的梯度**
+
+这需要多一跳链式法则。由计算图：
+
+$$
+L \xleftarrow{} y \xleftarrow{} z=\sigma(h) \xleftarrow{} h=(W_1+A_1B_1)x
+$$
+
+首先，$L$ 对 $h$ 的梯度需要经过 $z=\sigma(h)$ 和 $y=M_2z$ 两步。由链式法则：
+
+$$
+\frac{\partial L}{\partial h}
+=\frac{\partial L}{\partial z}\odot\sigma'(h)
+=\left(M_2^T\frac{\partial L}{\partial y}\right)\odot\sigma'(h)
+=\left(M_2^Tp\right)\odot\sigma'(h)
+$$
+
+令 $q=\frac{\partial L}{\partial h}$，则与第二层完全类似的推导：
+
+$$
+\frac{\partial L}{\partial A_1}
+=q\,(B_1x)^T
+$$
+
+$$
+\frac{\partial L}{\partial B_1}
+=A_1^T\,q\,x^T
+$$
+
+其中 $q=(M_2^Tp)\odot\sigma'(h)$，$M_2=W_2+A_2B_2$，$p=\nabla f(y)$。
+
+**与方法一的对比**
+
+| | 方法一（$\delta$ 符号） | 方法二（直接链式法则） |
+|---|---|---|
+| 中间变量 | $\delta_y,\delta_z,\delta_h$ 三个 | $p=\frac{\partial L}{\partial y}$，$q=\frac{\partial L}{\partial h}$ 两个 |
+| 写法风格 | 先定义所有中间梯度，再代入 | 逐步展开，按计算图路径直接写出 |
+| 适用场景 | 多层网络，中间变量复用多 | 层数少时更直观 |
+
+两种方法的最终公式完全一致，本质上都是链式法则，只是组织方式不同。
+
+---
+
 形状检查：
 
 $$
