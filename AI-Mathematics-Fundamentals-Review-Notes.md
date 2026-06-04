@@ -1003,7 +1003,7 @@ $$Av_n = \lambda_n v_n$$
 
 $$A[v_1 \ v_2 \ \cdots \ v_n] = [\lambda_1 v_1 \ \lambda_2 v_2 \ \cdots \ \lambda_n v_n]$$
 
-令 $P = [v_1 \ v_2 \ \cdots \ v_n]$（用特征向量组成矩阵），则：
+令 $P = [v_1 \ v_2 \ \cdots \ v_n]$（把特征向量**按列并排**组成矩阵），则：
 $$AP = [Av_1 \ Av_2 \ \cdots \ Av_n] = [\lambda_1 v_1 \ \lambda_2 v_2 \ \cdots \ \lambda_n v_n]$$
 
 另一方面：
@@ -1074,6 +1074,14 @@ $$P = \begin{pmatrix} \cdots \end{pmatrix}, \quad D = \begin{pmatrix} \cdots \en
 $P$ 的列是特征向量：
 $$P = [v_1 \ v_2] = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
 
+这里的 $[v_1 \ v_2]$ 表示**横着并排写两个列向量**，也就是：
+$$v_1=\begin{pmatrix} a \\ b \end{pmatrix},\quad v_2=\begin{pmatrix} c \\ d \end{pmatrix}
+\quad \Rightarrow \quad
+P=[v_1\ v_2]=\begin{pmatrix} a & c \\ b & d \end{pmatrix}$$
+
+不是把 $v_1,v_2$ 当成两行竖着叠起来。原因是矩阵右乘列向量时，$AP$ 会逐列计算：
+$$AP=A[v_1\ v_2]=[Av_1\ Av_2]$$
+
 $D$ 的对角线是对应特征值：
 $$D = \begin{pmatrix} 3 & 0 \\ 0 & 1 \end{pmatrix}$$
 
@@ -1099,6 +1107,85 @@ $$PD = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}\begin{pmatrix} 3 & 0 \\ 0 &
 $$PDP^{-1} = \begin{pmatrix} 3 & 1 \\ 3 & -1 \end{pmatrix} \cdot \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 3+1 & 3-1 \\ 3-1 & 3+1 \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 4 & 2 \\ 2 & 4 \end{pmatrix} = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix} = A$$
 
 验证成功！
+
+---
+
+#### 补充例题：用不对称的特征向量看清 $P$ 怎么拼
+
+对角化：
+$$A=\begin{pmatrix}4&1\\0&2\end{pmatrix}$$
+
+#### Step 1：求特征值
+
+$$\det(A-\lambda I)=
+\det\begin{pmatrix}4-\lambda&1\\0&2-\lambda\end{pmatrix}
+=(4-\lambda)(2-\lambda)$$
+
+所以：
+$$\lambda_1=4,\quad \lambda_2=2$$
+
+#### Step 2：求特征向量
+
+当 $\lambda_1=4$ 时：
+$$A-4I=\begin{pmatrix}0&1\\0&-2\end{pmatrix}$$
+
+由 $(A-4I)x=0$ 得 $y=0$，可取：
+$$v_1=\begin{pmatrix}1\\0\end{pmatrix}$$
+
+当 $\lambda_2=2$ 时：
+$$A-2I=\begin{pmatrix}2&1\\0&0\end{pmatrix}$$
+
+由 $(A-2I)x=0$ 得 $2x+y=0$，即 $y=-2x$，可取：
+$$v_2=\begin{pmatrix}1\\-2\end{pmatrix}$$
+
+#### Step 3：构造 $P$ 和 $D$
+
+现在最容易看清楚：$P$ 是把 $v_1$ 和 $v_2$ **作为列**横着拼在一起：
+$$P=[v_1\ v_2]
+=\begin{pmatrix}
+|&|\\
+v_1&v_2\\
+|&|
+\end{pmatrix}
+=\begin{pmatrix}1&1\\0&-2\end{pmatrix}$$
+
+也就是说：
+
+- 第 1 列 $\begin{pmatrix}1\\0\end{pmatrix}$ 是 $v_1$，对应 $\lambda_1=4$
+- 第 2 列 $\begin{pmatrix}1\\-2\end{pmatrix}$ 是 $v_2$，对应 $\lambda_2=2$
+
+所以：
+$$D=\begin{pmatrix}4&0\\0&2\end{pmatrix}$$
+
+如果错误地把特征向量竖着叠成两行，就会得到：
+$$\begin{pmatrix}1&0\\1&-2\end{pmatrix}$$
+
+这个矩阵的“第 1 列”是 $\begin{pmatrix}1\\1\end{pmatrix}$，已经不是 $v_1$ 了，因此不能和上面的 $D$ 对应起来。
+
+#### Step 4：验证对应关系
+
+不用急着算完整的 $P^{-1}AP$，先检查最关键的列对应关系：
+
+$$AP=A[v_1\ v_2]=[Av_1\ Av_2]$$
+
+分别计算：
+$$Av_1=
+\begin{pmatrix}4&1\\0&2\end{pmatrix}
+\begin{pmatrix}1\\0\end{pmatrix}
+=\begin{pmatrix}4\\0\end{pmatrix}
+=4v_1$$
+
+$$Av_2=
+\begin{pmatrix}4&1\\0&2\end{pmatrix}
+\begin{pmatrix}1\\-2\end{pmatrix}
+=\begin{pmatrix}2\\-4\end{pmatrix}
+=2v_2$$
+
+因此：
+$$AP=[4v_1\ 2v_2]=PD$$
+
+这就说明：
+$$A=PDP^{-1},\quad P^{-1}AP=D$$
 
 ---
 
@@ -4173,8 +4260,25 @@ $$H_f(x, y) = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}$$
    - $x^*$ 是全局最小值 $\iff \nabla f(x^*) = 0$
 
 3. **Jensen 不等式**
-   - 对于凸函数 $f$ 和随机变量 $X$：
+   - Jensen 不等式可以看成“凸函数定义”的加权平均版本。
+   - 凸函数定义里只比较两个点：
+   $$f(\theta x_1 + (1-\theta)x_2) \leq \theta f(x_1) + (1-\theta)f(x_2)$$
+   - 左边是“先把输入平均，再代入函数”；右边是“先分别代入函数，再把函数值平均”。
+   - Jensen 不等式把这种关系推广到多个点，甚至推广到随机变量。
+
+   **离散形式**：
+
+   若 $p_i \geq 0$，且 $\sum_{i=1}^n p_i = 1$，则：
+   $$f\left(\sum_{i=1}^n p_i x_i\right) \leq \sum_{i=1}^n p_i f(x_i)$$
+
+   **随机变量形式**：
+
+   对于凸函数 $f$ 和随机变量 $X$：
    $$f(E[X]) \leq E[f(X)]$$
+
+   读法：对凸函数来说，“平均以后再代入函数”的结果，不会超过“先代入函数再平均”的结果。
+
+   直观原因：凸函数像碗形，输入值越分散，经过凸函数后被抬高得越明显；直接把输入先平均，会把这种分散程度抹掉，所以左边通常更小。
 
 ---
 
@@ -4184,6 +4288,19 @@ $$H_f(x, y) = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}$$
 $$(E[X])^2 \leq E[X^2]$$
 
 这解释了为什么 $\text{Var}(X) = E[X^2] - (E[X])^2 \geq 0$。
+
+**小例子**：
+
+设 $X$ 以 $1/2$ 的概率取 $0$，以 $1/2$ 的概率取 $2$，且 $f(x)=x^2$。
+
+先平均再代入：
+$$E[X]=1,\quad f(E[X])=1^2=1$$
+
+先代入再平均：
+$$E[f(X)] = \frac{1}{2}f(0)+\frac{1}{2}f(2)=\frac{1}{2}\cdot 0+\frac{1}{2}\cdot 4=2$$
+
+因此：
+$$f(E[X]) = 1 \leq 2 = E[f(X)]$$
 
 ---
 
