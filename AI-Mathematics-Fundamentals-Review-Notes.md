@@ -5319,12 +5319,19 @@ $$\frac{\partial \mathcal{L}}{\partial W^{[1]}} = \delta^{[1]}x^T, \quad \frac{\
 
 **更新公式**：
 
+本节默认整体目标函数写成平均损失：
+$$f(w)=\frac{1}{n}\sum_{i=1}^n f_i(w)$$
+
 批量梯度下降：
-$$w_{k+1} = w_k - \eta \sum_{i=1}^{n} \nabla f_i(w_k)$$
+$$w_{k+1} = w_k - \eta \frac{1}{n}\sum_{i=1}^{n} \nabla f_i(w_k)$$
 
 SGD：
 $$w_{k+1} = w_k - \eta \nabla f_i(w_k)$$
 其中 $i$ 是随机选择的样本索引。
+
+这里 SGD 不再除以 $n$，因为随机抽一个样本时，$\nabla f_i(w_k)$ 的期望正好等于平均梯度 $\frac{1}{n}\sum_{i=1}^n \nabla f_i(w_k)$。也就是说，SGD 用一个样本的梯度去估计整体平均梯度。
+
+如果把目标函数写成总损失 $\sum_{i=1}^n f_i(w)$，那么 BGD 公式会写成不除以 $n$ 的求和形式。两种写法的最优解相同，只是梯度整体差了一个常数倍，学习率 $\eta$ 需要相应调整；同一段笔记里不要混用两种约定。
 
 ---
 
@@ -5369,9 +5376,9 @@ $$w_{k+1} = w_k - \eta \frac{1}{|B|}\sum_{i \in B} \nabla f_i(w_k)$$
 
 | 方法 | 更新公式 |
 |------|----------|
-| BGD | $w_{k+1} = w_k - \eta \sum_{i=1}^{n} (w^T x_i - y_i)x_i$ |
+| BGD | $w_{k+1} = w_k - \eta \frac{1}{n}\sum_{i=1}^{n} (w^T x_i - y_i)x_i$ |
 | SGD | $w_{k+1} = w_k - \eta (w^T x_i - y_i)x_i$（随机选 $i$） |
-| Mini-batch | $w_{k+1} = w_k - \eta \frac{1}{32}\sum_{i \in B} (w^T x_i - y_i)x_i$ |
+| Mini-batch | $w_{k+1} = w_k - \eta \frac{1}{\lvert B\rvert}\sum_{i \in B} (w^T x_i - y_i)x_i$ |
 
 ---
 
