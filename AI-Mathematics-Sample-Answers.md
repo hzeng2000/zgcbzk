@@ -646,7 +646,103 @@ $$
 
 ### (c) 对偶问题
 
-把驻点条件代回拉格朗日函数，得到对偶问题：
+对偶问题来自对拉格朗日函数关于原变量 $w,b$ 取极小。先把拉格朗日函数展开：
+
+$$
+\begin{aligned}
+L(w,b,\alpha)
+&=\frac12\lVert w\rVert_2^2
++\sum_{i=1}^m\alpha_i\left[1-y_i(w^Tx_i+b)\right]\\
+&=\frac12\lVert w\rVert_2^2
++\sum_{i=1}^m\alpha_i
+-\sum_{i=1}^m\alpha_i y_i w^Tx_i
+-b\sum_{i=1}^m\alpha_i y_i.
+\end{aligned}
+$$
+
+由驻点条件
+
+$$
+\sum_{i=1}^m\alpha_i y_i=0
+$$
+
+可知含 $b$ 的项消失：
+
+$$
+-b\sum_{i=1}^m\alpha_i y_i=0.
+$$
+
+因此
+
+$$
+L(w,b,\alpha)
+=\frac12\lVert w\rVert_2^2
++\sum_{i=1}^m\alpha_i
+-\sum_{i=1}^m\alpha_i y_i w^Tx_i.
+$$
+
+再处理最后一项。因为 $w^Tx_i$ 是标量，有：
+
+$$
+\sum_{i=1}^m\alpha_i y_i w^Tx_i
+=w^T\left(\sum_{i=1}^m\alpha_i y_i x_i\right).
+$$
+
+由另一个驻点条件
+
+$$
+w=\sum_{i=1}^m\alpha_i y_i x_i
+$$
+
+可得：
+
+$$
+w^T\left(\sum_{i=1}^m\alpha_i y_i x_i\right)
+=w^Tw
+=\lVert w\rVert_2^2.
+$$
+
+所以代回后：
+
+$$
+\begin{aligned}
+L(w,b,\alpha)
+&=\frac12\lVert w\rVert_2^2
++\sum_{i=1}^m\alpha_i
+-\lVert w\rVert_2^2\\
+&=\sum_{i=1}^m\alpha_i-\frac12\lVert w\rVert_2^2.
+\end{aligned}
+$$
+
+但对偶问题中不能再含有原变量 $w$，还要把 $\lVert w\rVert_2^2$ 写成 $\alpha$ 的形式。由
+
+$$
+w=\sum_{i=1}^m\alpha_i y_i x_i
+$$
+
+可得：
+
+$$
+\begin{aligned}
+\lVert w\rVert_2^2
+&=w^Tw\\
+&=\left(\sum_{i=1}^m\alpha_i y_i x_i\right)^T
+\left(\sum_{j=1}^m\alpha_j y_j x_j\right)\\
+&=\sum_{i=1}^m\sum_{j=1}^m
+\alpha_i\alpha_j y_i y_j x_i^Tx_j.
+\end{aligned}
+$$
+
+因此对偶目标函数为：
+
+$$
+\sum_{i=1}^m\alpha_i
+-\frac12
+\sum_{i=1}^m\sum_{j=1}^m
+\alpha_i\alpha_j y_i y_j x_i^Tx_j.
+$$
+
+于是对偶问题为：
 
 $$
 \max_{\alpha}
@@ -682,7 +778,25 @@ $$
 y_i\left((w^\star)^Tx_i+b^\star\right)=1
 $$
 
-得到：
+两边除以 $y_i$：
+
+$$
+(w^\star)^Tx_i+b^\star=\frac{1}{y_i}
+$$
+
+但 SVM 中类别标签只有 $y_i=+1$ 或 $y_i=-1$，因此：
+
+$$
+\frac{1}{y_i}=y_i
+$$
+
+所以：
+
+$$
+(w^\star)^Tx_i+b^\star=y_i
+$$
+
+移项得到：
 
 $$
 b^\star=y_i-(w^\star)^Tx_i
@@ -1006,26 +1120,48 @@ $$
 =A_1^T\delta_h x^T}
 $$
 
-#### 方法二：直接用链式法则（不引入 $\delta$ 符号）
+#### 方法二：直接用链式法则（不引入额外中间变量）
 
-上面的方法先定义了中间梯度 $\delta_y,\delta_z,\delta_h$，再用它们表示各参数的梯度。下面给出一种**不定义 $\delta$，直接对计算图逐步使用链式法则**的写法，本质相同但更贴近"链式法则逐步展开"的思路。
+上面的方法先定义了中间梯度 $\delta_y,\delta_z,\delta_h$，再用它们表示各参数的梯度。下面给出一种**不额外引入中间变量名**的写法，直接使用题干中的 $x,W_1,W_2,A_1,B_1,A_2,B_2,h,z,y,L,f,\sigma$ 展开。
 
 **第二层参数 $A_2,B_2$ 的梯度**
 
-由 $y=(W_2+A_2B_2)z$，记 $p=\frac{\partial L}{\partial y}=\nabla f(y)$。
+由
 
-对 $A_2$，因为 $y$ 对 $A_2$ 的依赖是 $y=\cdots+A_2(B_2z)$，将 $B_2z$ 视为常数向量，则：
+$$
+y=(W_2+A_2B_2)z=W_2z+A_2B_2z,\quad L=f(y)
+$$
+
+可知
+
+$$
+\frac{\partial L}{\partial y}=\nabla f(y).
+$$
+
+对 $A_2$，$y$ 中与 $A_2$ 有关的部分是：
+
+$$
+A_2B_2z=A_2(B_2z).
+$$
+
+将 $B_2z$ 视为对 $A_2$ 求导时的常数向量，由链式法则得到：
 
 $$
 \frac{\partial L}{\partial A_2}
-=p\,(B_2z)^T
+=\nabla f(y)(B_2z)^T
 $$
 
-对 $B_2$，因为 $y=\cdots+A_2B_2z$，将 $A_2$ 和 $z$ 固定，$B_2$ 通过 $A_2B_2$ 起作用。由链式法则，先对中间量 $u=A_2^Tp$（标量对矩阵求导的"内侧"梯度），再对 $B_2$：
+对 $B_2$，$y$ 中与 $B_2$ 有关的部分仍是：
+
+$$
+A_2B_2z.
+$$
+
+当 $B_2$ 发生一个很小变化时，$y$ 的变化方向会先被左侧的 $A_2$ 传回到 $B_2z$，再乘上右侧的 $z^T$。因此：
 
 $$
 \frac{\partial L}{\partial B_2}
-=A_2^T\,p\,z^T
+=A_2^T\nabla f(y)z^T
 $$
 
 **第一层参数 $A_1,B_1$ 的梯度**
@@ -1036,35 +1172,48 @@ $$
 L \xleftarrow{} y \xleftarrow{} z=\sigma(h) \xleftarrow{} h=(W_1+A_1B_1)x
 $$
 
-首先，$L$ 对 $h$ 的梯度需要经过 $z=\sigma(h)$ 和 $y=M_2z$ 两步。由链式法则：
+首先，$L$ 对 $h$ 的梯度需要经过 $z=\sigma(h)$ 和 $y=(W_2+A_2B_2)z$ 两步。由链式法则：
 
 $$
 \frac{\partial L}{\partial h}
 =\frac{\partial L}{\partial z}\odot\sigma'(h)
-=\left(M_2^T\frac{\partial L}{\partial y}\right)\odot\sigma'(h)
-=\left(M_2^Tp\right)\odot\sigma'(h)
+=\left((W_2+A_2B_2)^T\frac{\partial L}{\partial y}\right)\odot\sigma'(h)
+=\left((W_2+A_2B_2)^T\nabla f(y)\right)\odot\sigma'(h)
 $$
 
-令 $q=\frac{\partial L}{\partial h}$，则与第二层完全类似的推导：
+由
+
+$$
+\frac{\partial L}{\partial h}
+=\left((W_2+A_2B_2)^T\nabla f(y)\right)\odot\sigma'(h)
+$$
+
+以及
+
+$$
+h=(W_1+A_1B_1)x=W_1x+A_1B_1x
+$$
+
+可知，对 $A_1$，$h$ 中与 $A_1$ 有关的部分是 $A_1(B_1x)$，所以：
 
 $$
 \frac{\partial L}{\partial A_1}
-=q\,(B_1x)^T
+=\left[\left((W_2+A_2B_2)^T\nabla f(y)\right)\odot\sigma'(h)\right](B_1x)^T
 $$
+
+对 $B_1$，$h$ 中与 $B_1$ 有关的部分是 $A_1B_1x$，所以：
 
 $$
 \frac{\partial L}{\partial B_1}
-=A_1^T\,q\,x^T
+=A_1^T\left[\left((W_2+A_2B_2)^T\nabla f(y)\right)\odot\sigma'(h)\right]x^T
 $$
-
-其中 $q=(M_2^Tp)\odot\sigma'(h)$，$M_2=W_2+A_2B_2$，$p=\nabla f(y)$。
 
 **与方法一的对比**
 
 | | 方法一（$\delta$ 符号） | 方法二（直接链式法则） |
 |---|---|---|
-| 中间变量 | $\delta_y,\delta_z,\delta_h$ 三个 | $p=\frac{\partial L}{\partial y}$，$q=\frac{\partial L}{\partial h}$ 两个 |
-| 写法风格 | 先定义所有中间梯度，再代入 | 逐步展开，按计算图路径直接写出 |
+| 中间变量 | $\delta_y,\delta_z,\delta_h$ 三个 | 不额外命名中间梯度，直接写完整链式表达式 |
+| 写法风格 | 先定义所有中间梯度，再代入 | 每一步都用题干变量直接展开 |
 | 适用场景 | 多层网络，中间变量复用多 | 层数少时更直观 |
 
 两种方法的最终公式完全一致，本质上都是链式法则，只是组织方式不同。
