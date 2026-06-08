@@ -58,6 +58,8 @@ $$
 
 ### 3. 特征值与特征向量
 
+**解法一：利用矩阵结构观察。**
+
 矩阵 $A$ 的前两维是
 
 $$
@@ -110,6 +112,125 @@ $$
 
 $$
 3,\quad 1,\quad 1.
+$$
+
+**解法二：按特征方程求解。**
+
+特征值由
+
+$$
+\det(A-\lambda I)=0
+$$
+
+求出。先写出
+
+$$
+A-\lambda I
+=
+\begin{pmatrix}
+2-\lambda&1&0\\
+1&2-\lambda&0\\
+0&0&1-\lambda
+\end{pmatrix}.
+$$
+
+因为第三行、第三列和前两维没有混在一起，所以行列式为
+
+$$
+\det(A-\lambda I)
+=(1-\lambda)
+\begin{vmatrix}
+2-\lambda&1\\
+1&2-\lambda
+\end{vmatrix}.
+$$
+
+继续计算：
+
+$$
+\begin{aligned}
+\det(A-\lambda I)
+&=(1-\lambda)\left[(2-\lambda)^2-1\right]\\
+&=(1-\lambda)(2-\lambda-1)(2-\lambda+1)\\
+&=(1-\lambda)^2(3-\lambda).
+\end{aligned}
+$$
+
+令它等于 0，得到
+
+$$
+\lambda_1=3,\quad \lambda_2=1.
+$$
+
+其中 $\lambda=1$ 是二重特征值。
+
+下面分别求特征向量。特征向量要满足
+
+$$
+(A-\lambda I)p=0.
+$$
+
+当 $\lambda=3$ 时，
+
+$$
+A-3I
+=
+\begin{pmatrix}
+-1&1&0\\
+1&-1&0\\
+0&0&-2
+\end{pmatrix}.
+$$
+
+设 $p=(x,y,z)^T$，则
+
+$$
+\begin{cases}
+-x+y=0,\\
+x-y=0,\\
+-2z=0.
+\end{cases}
+$$
+
+所以 $y=x,\ z=0$。令 $x=1$，可取
+
+$$
+p_1=\begin{pmatrix}1\\1\\0\end{pmatrix}.
+$$
+
+当 $\lambda=1$ 时，
+
+$$
+A-I
+=
+\begin{pmatrix}
+1&1&0\\
+1&1&0\\
+0&0&0
+\end{pmatrix}.
+$$
+
+设 $p=(x,y,z)^T$，则
+
+$$
+x+y=0.
+$$
+
+因此 $y=-x$，而 $z$ 可以任意取值。于是 $\lambda=1$ 对应的特征向量集合可以写成
+
+$$
+p=
+\begin{pmatrix}x\\-x\\z\end{pmatrix}
+=x\begin{pmatrix}1\\-1\\0\end{pmatrix}
++z\begin{pmatrix}0\\0\\1\end{pmatrix}.
+$$
+
+所以可以取两个线性无关的特征向量
+
+$$
+p_2=\begin{pmatrix}1\\-1\\0\end{pmatrix},
+\quad
+p_3=\begin{pmatrix}0\\0\\1\end{pmatrix}.
 $$
 
 ### 4. 正定性与对角化
@@ -917,4 +1038,3 @@ S=QK^T.
 $$
 
 这是一个 $n\times n$ 矩阵。计算 $QK^T$ 通常需要 $O(n^2d)$ 的计算量，保存注意力权重矩阵需要 $O(n^2)$ 的存储量。因此序列长度变长时，自注意力的计算和显存开销会按序列长度的平方增长。
-
