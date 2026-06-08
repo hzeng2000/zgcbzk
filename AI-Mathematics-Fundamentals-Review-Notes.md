@@ -1629,16 +1629,55 @@ $$\sigma_i = \sqrt{\lambda_i(A^TA)} = \sqrt{\lambda_i(AA^T)}$$
 
 #### 为什么这样是对的？
 
-从正交性推导：
+这里容易跳步：$A^T u_i = \sigma_i v_i$ 不是一开始就凭空知道的，而是由 $u_i$ 的定义推出来的。可以分成两个方向看。
+
+**方向 1：如果 SVD 已经成立，就能推出特征值关系。**
+
+设：
 $$A = U\Sigma V^T$$
+
+其中 $V = [v_1 \ v_2 \ \dots]$，$U = [u_1 \ u_2 \ \dots]$。
+
 两边右乘 $V$：
 $$AV = U\Sigma$$
+
+看第 $i$ 列，就得到：
 $$Av_i = \sigma_i u_i$$
 
-两边左乘 $A^T$：
-$$A^T A v_i = \sigma_i A^T u_i = \sigma_i \cdot \sigma_i v_i = \sigma_i^2 v_i$$
+再由 $A = U\Sigma V^T$ 转置可得：
+$$A^T = V\Sigma^T U^T$$
+
+所以看 $A^T$ 作用在第 $i$ 个左奇异向量 $u_i$ 上：
+$$A^T u_i = \sigma_i v_i$$
+
+因此：
+$$A^T A v_i = A^T(Av_i) = A^T(\sigma_i u_i) = \sigma_i A^T u_i = \sigma_i(\sigma_i v_i) = \sigma_i^2 v_i$$
 
 所以 $v_i$ 是 $A^TA$ 的特征向量，对应特征值 $\sigma_i^2$。
+
+**方向 2：实际手算 SVD 时，是反过来构造的。**
+
+手算时通常不是先知道 $U, \Sigma, V$，而是先求 $A^TA$ 的特征值和特征向量：
+$$A^T A v_i = \lambda_i v_i$$
+
+然后令：
+$$\sigma_i = \sqrt{\lambda_i}$$
+
+于是：
+$$A^T A v_i = \sigma_i^2 v_i$$
+
+对非零奇异值 $\sigma_i > 0$，定义：
+$$u_i = \frac{1}{\sigma_i} A v_i$$
+
+这等价于：
+$$Av_i = \sigma_i u_i$$
+
+再由这个定义推出：
+$$A^T u_i = A^T\left(\frac{1}{\sigma_i}Av_i\right) = \frac{1}{\sigma_i}A^TAv_i = \frac{1}{\sigma_i}\sigma_i^2 v_i = \sigma_i v_i$$
+
+所以 $A^T u_i = \sigma_i v_i$ 不是额外假设，而是由 $u_i = \frac{1}{\sigma_i}Av_i$ 和 $A^T A v_i = \sigma_i^2 v_i$ 推出来的。
+
+注意：如果 $\sigma_i = 0$，不能用 $u_i = \frac{1}{\sigma_i}Av_i$，这时对应的 $u_i$ 需要在已有左奇异向量之外补成一组单位正交基。
 
 ---
 
@@ -1895,18 +1934,18 @@ $$P(A|B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
 **韦恩图**：
 ```text
 Omega
-+-----------------------------+
-|                             |
-|     B                       |
-|   +-------------+           |
-|   |             |           |
-|   |      +------+-----+ A   |
-  |   |      | A&B  |     |     |
-|   |      +------+-----+     |
-|   |             |           |
-|   +-------------+           |
-|                             |
-+-----------------------------+
++--------------------------------+
+|                                |
+|     B                          |
+|   +----------------+           |
+|   |                |           |
+|   |       +--------+------+    |
+|   |       |  A & B |      | A  |
+|   |       +--------+------+    |
+|   |                |           |
+|   +----------------+           |
+|                                |
++--------------------------------+
 
 P(A|B) = 面积(A∩B) / 面积(B)
 ```
