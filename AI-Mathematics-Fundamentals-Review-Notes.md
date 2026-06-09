@@ -4718,8 +4718,11 @@ $$\text{s.t.} \quad \sum_{i=1}^{n} \alpha_i y_i = 0, \quad \alpha_i \geq 0$$
 
 **软间隔为什么多出 $0\leq\alpha_i\leq C$**：
 
-软间隔多了松弛变量 $\xi_i$，拉格朗日函数还会包含 $\xi_i$ 的非负约束对应的乘子 $\beta_i\geq 0$：
-$$L=\frac{1}{2}\|w\|^2+C\sum_i\xi_i+\sum_i\alpha_i[1-\xi_i-y_i(w^Tx_i+b)]-\sum_i\beta_i\xi_i$$
+软间隔多了松弛变量 $\xi_i$。为了统一使用“约束写成 $\leq 0$，拉格朗日项写成加号”的形式，把约束写成：
+$$1-\xi_i-y_i(w^Tx_i+b)\leq 0,\quad -\xi_i\leq 0$$
+
+拉格朗日函数还会包含 $\xi_i$ 的非负约束对应的乘子 $\beta_i\geq 0$：
+$$L=\frac{1}{2}\|w\|^2+C\sum_i\xi_i+\sum_i\alpha_i[1-\xi_i-y_i(w^Tx_i+b)]+\sum_i\beta_i(-\xi_i)$$
 
 对 $\xi_i$ 求导并令其为 0：
 $$\frac{\partial L}{\partial \xi_i}=C-\alpha_i-\beta_i=0$$
