@@ -160,11 +160,65 @@ $$
 1,0,1,1,0.
 $$
 
-其中取值为 1 的样本有 3 个，总样本数为 5。伯努利参数 $\theta=P(X=1)$ 的最大似然估计为
+伯努利分布中，单个样本 $x_i\in\{0,1\}$ 的概率可以写成：
+
+$$
+p(x_i|\theta)=\theta^{x_i}(1-\theta)^{1-x_i}.
+$$
+
+因此 5 个独立同分布样本的似然函数为：
+
+$$
+L(\theta)=\prod_{i=1}^{5}p(x_i|\theta)
+=\prod_{i=1}^{5}\theta^{x_i}(1-\theta)^{1-x_i}.
+$$
+
+把样本 $1,0,1,1,0$ 代入。因为取值为 1 的样本有 3 个，取值为 0 的样本有 2 个，所以：
+
+$$
+L(\theta)=\theta^3(1-\theta)^2.
+$$
+
+取对数似然：
+
+$$
+\ell(\theta)=\ln L(\theta)=3\ln\theta+2\ln(1-\theta).
+$$
+
+对 $\theta$ 求导并令其为 0：
+
+$$
+\frac{d\ell}{d\theta}
+=\frac{3}{\theta}-\frac{2}{1-\theta}=0.
+$$
+
+移项：
+
+$$
+\frac{3}{\theta}=\frac{2}{1-\theta}.
+$$
+
+交叉相乘：
+
+$$
+3(1-\theta)=2\theta.
+$$
+
+即：
+
+$$
+3-3\theta=2\theta
+\quad\Rightarrow\quad
+3=5\theta.
+$$
+
+所以：
 
 $$
 \hat\theta_{MLE}=\frac{3}{5}.
 $$
+
+也就是说，伯努利分布中 $\theta=P(X=1)$ 的 MLE 等于样本中 1 出现的频率。
 
 ### 2. 方窗 Parzen 密度估计
 
@@ -398,10 +452,66 @@ $$
 \ell(w,b)=-y\log p-(1-y)\log(1-p).
 $$
 
-损失对 $w$ 的梯度为
+下面推导损失对 $w$ 的梯度。令
 
 $$
-\frac{\partial \ell}{\partial w}=(p-y)x.
+s=w^Tx+b,\quad p=\sigma(s).
+$$
+
+单样本损失为
+
+$$
+\ell=-y\log p-(1-y)\log(1-p).
+$$
+
+先对 $p$ 求导：
+
+$$
+\frac{\partial \ell}{\partial p}
+=-\frac{y}{p}+\frac{1-y}{1-p}.
+$$
+
+通分：
+
+$$
+\frac{\partial \ell}{\partial p}
+=\frac{-y(1-p)+(1-y)p}{p(1-p)}
+=\frac{p-y}{p(1-p)}.
+$$
+
+Sigmoid 的导数为：
+
+$$
+\frac{\partial p}{\partial s}=p(1-p).
+$$
+
+因此由链式法则：
+
+$$
+\frac{\partial \ell}{\partial s}
+=\frac{\partial \ell}{\partial p}\frac{\partial p}{\partial s}
+=\frac{p-y}{p(1-p)}\cdot p(1-p)
+=p-y.
+$$
+
+又因为
+
+$$
+s=w^Tx+b,
+$$
+
+所以
+
+$$
+\frac{\partial s}{\partial w}=x.
+$$
+
+因此损失对 $w$ 的梯度为：
+
+$$
+\frac{\partial \ell}{\partial w}
+=\frac{\partial \ell}{\partial s}\frac{\partial s}{\partial w}
+=(p-y)x.
 $$
 
 对偏置项的梯度为
@@ -617,16 +727,138 @@ $$
 
 ### 4. LDA 投影方向
 
-两类 LDA 的投影方向满足
+两类 LDA 指的是只有两个类别时的线性判别分析。它要找一个投影方向 $w$，把二维样本 $x$ 投影成一维数值：
+
+$$
+z=w^Tx.
+$$
+
+LDA 希望投影后满足两个目标：
+
+1. 两类均值之间尽量分开；
+2. 每一类内部尽量集中。
+
+第 1 类均值投影后为 $w^T\mu_1$，第 2 类均值投影后为 $w^T\mu_2$，所以两类投影后均值差为：
+
+$$
+w^T\mu_1-w^T\mu_2=w^T(\mu_1-\mu_2).
+$$
+
+令
+
+$$
+m=\mu_1-\mu_2.
+$$
+
+则投影后的类间分离程度可以写成：
+
+$$
+(w^Tm)^2.
+$$
+
+接下来推导投影后的类内散度。设第 $k$ 类中的样本为 $x$，该类均值为 $\mu_k$。样本投影后为：
+
+$$
+z=w^Tx.
+$$
+
+该类均值投影后为：
+
+$$
+w^T\mu_k.
+$$
+
+所以样本 $x$ 投影后偏离本类中心的量为：
+
+$$
+w^Tx-w^T\mu_k=w^T(x-\mu_k).
+$$
+
+把所有类别、所有样本的投影偏离量平方后加起来，得到投影后的类内散度：
+
+$$
+\sum_k\sum_{x\in C_k}[w^T(x-\mu_k)]^2.
+$$
+
+对其中一项展开：
+
+$$
+[w^T(x-\mu_k)]^2
+=w^T(x-\mu_k)(x-\mu_k)^Tw.
+$$
+
+因此：
+
+$$
+\sum_k\sum_{x\in C_k}[w^T(x-\mu_k)]^2
+=w^T\left[\sum_k\sum_{x\in C_k}(x-\mu_k)(x-\mu_k)^T\right]w.
+$$
+
+中括号中的矩阵就是类内散度矩阵：
+
+$$
+S_w=\sum_k\sum_{x\in C_k}(x-\mu_k)(x-\mu_k)^T.
+$$
+
+所以投影后的类内散度可以写成：
+
+$$
+w^TS_ww.
+$$
+
+因此两类 LDA 最大化 Fisher 准则：
+
+$$
+J(w)=\frac{(w^Tm)^2}{w^TS_ww}.
+$$
+
+这个式子的含义是：
+
+$$
+\text{类间分离程度} \div \text{类内分散程度}.
+$$
+
+由于 $w$ 乘以任意非零常数只会整体缩放投影值，不改变投影方向，所以 LDA 只关心 $w$ 的方向。最大化上式可以得到广义特征值条件：
+
+$$
+mm^Tw=\lambda S_ww.
+$$
+
+因为 $m^Tw$ 是一个标量，所以
+
+$$
+mm^Tw=m(m^Tw),
+$$
+
+它的方向一定与 $m$ 相同。因此有：
+
+$$
+S_ww\propto m.
+$$
+
+两边左乘 $S_w^{-1}$，得到两类 LDA 的投影方向：
 
 $$
 w\propto S_w^{-1}(\mu_1-\mu_2).
 $$
 
+这里的 $\propto$ 读作“正比于”，表示只关心方向，不要求向量长度完全相同。
+
+代入本题数据：
+
+$$
+S_w=I_2.
+$$
+
+单位矩阵的逆仍然是单位矩阵：
+
+$$
+S_w^{-1}=I_2.
+$$
+
 这里
 
 $$
-S_w=I_2,\quad
 \mu_1-\mu_2=
 \begin{pmatrix}0\\0\end{pmatrix}
 -
@@ -639,6 +871,15 @@ $$
 
 $$
 w\propto
+S_w^{-1}(\mu_1-\mu_2)
+=I_2
+\begin{pmatrix}-2\\0\end{pmatrix}.
+$$
+
+也就是：
+
+$$
+w\propto
 \begin{pmatrix}-2\\0\end{pmatrix}.
 $$
 
@@ -648,6 +889,8 @@ $$
 w\propto
 \begin{pmatrix}1\\0\end{pmatrix}.
 $$
+
+直观解释：两类均值分别为 $(0,0)^T$ 和 $(2,0)^T$，只在横轴方向上分开；同时 $S_w=I_2$ 不会改变方向，所以 LDA 选择横轴方向作为最佳投影方向。
 
 ### 5. 特征选择方法举例
 
@@ -939,4 +1182,3 @@ $$
 5. 若最高相似度超过阈值，则输出对应职员；否则判为未知人员或进入人工复核。
 
 这个方案通常不需要从零训练网络；在数据充足时，也可以对预训练网络或分类器进行微调。
-
